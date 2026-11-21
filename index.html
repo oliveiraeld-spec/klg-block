@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#0b1d2b" />
   <meta name="description" content="KLG Block: encaixe blocos, faça combos e suba de nível com o Calango!" />
-  <title>KLG Block 1.0 — Calango</title>
-  <link rel="icon" type="image/svg+xml" href="logo-klg.svg" />
+  <title>KLG Block 1.1 — Calango</title>
+  <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -15,10 +15,10 @@
   <div class="ambient ambient-b" aria-hidden="true"></div>
   <main class="app" id="app">
     <section class="screen home-screen" id="homeScreen" aria-label="Tela inicial">
-      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.0</span></div>
+      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.1</span></div>
       <div class="hero">
-        <div class="hero-halo"><img src="logo-klg.svg" alt="Calango mascote KLG" class="hero-logo" /></div>
-        <div class="brand-kicker">O DESAFIO DO CALANGO</div>
+        <div class="hero-halo"><img src="logo-klg.png" alt="Calango mascote KLG" class="hero-logo" /></div>
+        <div class="brand-kicker">O DESAFIO DO CALANGO</div><div class="hero-new">✨ NOVO MASCOTE KLG</div>
         <h1><span>KLG</span> BLOCK</h1>
         <p>Encaixe as peças. Complete linhas.<br />Solte combos de outro nível!</p>
       </div>
@@ -38,7 +38,7 @@
     <section class="screen game-screen hidden" id="gameScreen" aria-label="Jogo">
       <header class="game-header">
         <button id="backBtn" class="icon-btn" title="Voltar ao início" aria-label="Voltar ao início" type="button">‹</button>
-        <div class="game-brand"><img src="logo-klg.svg" alt="" /><div><strong>KLG <span>BLOCK</span></strong><small>CALANGO EDITION</small></div></div>
+        <div class="game-brand"><img src="logo-klg.png" alt="" /><div><strong>KLG <span>BLOCK</span></strong><small>CALANGO EDITION</small></div></div>
         <button id="soundBtn" class="icon-btn sound-btn" title="Ligar ou desligar áudio" aria-label="Ligar ou desligar áudio" type="button">♫</button>
       </header>
       <div class="score-panel">
@@ -51,6 +51,11 @@
         <div class="board-heading"><span><i></i> TABULEIRO 8×8</span><span id="comboBadge" class="combo-badge">FAÇA UM COMBO!</span></div>
         <div id="board" class="board" role="grid" aria-label="Tabuleiro de oito por oito"></div>
         <div id="toast" class="toast" aria-live="polite"></div>
+        <div id="mascotCheer" class="mascot-cheer" aria-hidden="true">
+          <img src="logo-klg.png" alt="" />
+          <div class="mascot-speech" id="mascotSpeech">MANDOU BEM!</div>
+        </div>
+        <div id="partyParticles" class="party-particles" aria-hidden="true"></div>
       </div>
       <div class="tray-section">
         <div class="tray-title"><span>SUAS PEÇAS</span><span class="tray-hint">Arraste ou toque para selecionar</span></div>
@@ -70,7 +75,7 @@
     </div>
   </div>
   <div class="modal-backdrop hidden" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle">
-    <div class="modal-card result-card"><img src="logo-klg.svg" alt="Calango KLG" class="result-logo" /><h2 id="endTitle">Fim de jogo!</h2><p id="endSubtitle">O Calango mandou bem!</p>
+    <div class="modal-card result-card"><img src="logo-klg.png" alt="Calango KLG" class="result-logo" /><h2 id="endTitle">Fim de jogo!</h2><p id="endSubtitle">O Calango mandou bem!</p>
       <div class="result-number" id="finalScore">0</div><span class="result-caption">PONTOS NA PARTIDA</span>
       <div class="result-meta"><span>🏆 Recorde <b id="finalBest">0</b></span><span>🧱 Linhas <b id="finalLines">0</b></span></div>
       <button id="againBtn" type="button" class="main-btn">JOGAR NOVAMENTE</button><button id="endHomeBtn" type="button" class="plain-btn">VOLTAR AO INÍCIO</button>

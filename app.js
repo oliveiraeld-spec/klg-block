@@ -27,7 +27,7 @@
   const dims = cells => ({rows: 1 + Math.max(...cells.map(p => p[0])), cols: 1 + Math.max(...cells.map(p => p[1]))});
   const format = n => Math.max(0,n).toLocaleString('pt-BR');
   let state = {board:blankBoard(), tray:[], score:0, best:0, coins:0, xp:0, lines:0, combo:0, gameOver:false, hasGame:false, sound:true};
-  let selected = null, drag = null, ghost = null, currentPreview = null, toastTimer = null, flashTimer = null, soundContext = null;
+  let selected = null, drag = null, ghost = null, currentPreview = null, toastTimer = null, flashTimer = null, soundContext = null, cheerTimer = null, particleTimer = null;
   let idSeed = 0;
 
   function load() {
@@ -63,14 +63,14 @@
     state.tray = proposed;
   }
   function newGame() {
-    clearDrag();
+    clearDrag();clearCheer();
     state.board=blankBoard(); state.tray=[];state.score=0;state.lines=0;state.combo=0;state.gameOver=false;state.hasGame=true;
     selected=null;newSet();save();hide('endModal');showGame();say('Arraste uma peça para jogar.');
   }
   function show(id) {el(id).classList.remove('hidden');}
   function hide(id) {el(id).classList.add('hidden');}
   function showHome() {
-    clearDrag();selected=null;hide('gameScreen');show('homeScreen');hide('endModal');
+    clearDrag();clearCheer();selected=null;hide('gameScreen');show('homeScreen');hide('endModal');
     el('homeBest').textContent=format(state.best); el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();
     el('resumeBtn').classList.toggle('hidden',!state.hasGame || state.gameOver);
   }
@@ -117,12 +117,42 @@
     const node=el('toast');clearTimeout(toastTimer);node.classList.remove('show');void node.offsetWidth;node.textContent=message;node.classList.add('show');
     toastTimer=setTimeout(()=>node.classList.remove('show'),1100);
   }
+  function clearCheer(){
+    clearTimeout(cheerTimer);clearTimeout(particleTimer);
+    const cheer=el('mascotCheer'),wrap=document.querySelector('.board-wrap');
+    if(cheer)cheer.classList.remove('show');
+    if(wrap)wrap.classList.remove('party-time');
+    const particles=el('partyParticles');if(particles)particles.replaceChildren();
+  }
+  function celebrate(message, intensity=1){
+    clearCheer();
+    const cheer=el('mascotCheer'),wrap=document.querySelector('.board-wrap'),particles=el('partyParticles');
+    if(!cheer||!wrap||!particles)return;
+    el('mascotSpeech').textContent=message;
+    void cheer.offsetWidth;cheer.classList.add('show');wrap.classList.add('party-time');
+    const count=Math.min(38,13+intensity*6),colors=['#ffcc55','#87ff94','#7de9ff','#ff7ab4','#bf94ff'];
+    const fragment=document.createDocumentFragment();
+    for(let i=0;i<count;i++){
+      const p=document.createElement('span');p.className='particle';
+      p.style.setProperty('--x',(28+Math.random()*54)+'%');
+      p.style.setProperty('--y',(18+Math.random()*54)+'%');
+      p.style.setProperty('--sz',(4+Math.random()*7)+'px');
+      p.style.setProperty('--dx',((Math.random()-.5)*250)+'px');
+      p.style.setProperty('--dy',((Math.random()-.6)*250)+'px');
+      p.style.setProperty('--spin',((Math.random()-.5)*900)+'deg');
+      p.style.setProperty('--clr',colors[i%colors.length]);fragment.append(p);
+    }
+    particles.append(fragment);
+    cheerTimer=setTimeout(()=>{cheer.classList.remove('show');wrap.classList.remove('party-time');},1400);
+    particleTimer=setTimeout(()=>particles.replaceChildren(),1150);
+  }
+
   function beep(type='tap') {
     if(!state.sound) return;
     try {
       const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
       soundContext=soundContext||new Audio();if(soundContext.state==='suspended') soundContext.resume();
-      const now=soundContext.currentTime;const notes=type==='win'?[523,659,784]:type==='combo'?[523,659,784,1047]:type==='fail'?[200,170]:[510];
+      const now=soundContext.currentTime;const notes=type==='win'?[523,659,784]:type==='combo'?[523,659,784,1047,1318]:type==='super'?[659,784,988,1174,1568]:type==='fail'?[200,170]:[510];
       notes.forEach((frequency,i)=>{
         const start=now+i*.09,osc=soundContext.createOscillator(),gain=soundContext.createGain();osc.type=type==='fail'?'triangle':'sine';osc.frequency.setValueAtTime(frequency,start);
         gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.09,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+.16);
@@ -151,7 +181,8 @@
       const bonus=100*lineCount*lineCount+(state.combo-1)*50*lineCount;
       state.score+=bonus;state.coins+=lineCount*3+Math.max(0,state.combo-1)*2;state.xp+=lineCount*16;
       popToast(state.combo>=2?'🔥 COMBO ×'+state.combo+'!':lineCount>=2?'SUPER LIMPEZA!':'BOA, CALANGO!');
-      say('Mandou bem! '+lineCount+' linha(s) eliminada(s).');beep(state.combo>=2?'combo':'win');
+      celebrate(state.combo>=3?'COMBO INSANO!':state.combo>=2?'QUE COMBO!':lineCount>=2?'SENSACIONAL!':'MANDOU BEM!',Math.max(lineCount,state.combo));
+      say('Mandou bem! '+lineCount+' linha(s) eliminada(s).');beep(lineCount>=3||state.combo>=3?'super':state.combo>=2?'combo':'win');
     } else {state.combo=0;say('Continue encaixando para completar linhas.');beep('tap');}
     if(state.score>state.best){state.best=state.score;}
     selected=null;

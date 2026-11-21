@@ -1,59 +1,38 @@
-KLG BLOCK 1.0 - GERAR UM APK NO GITHUB (SEM ANDROID STUDIO)
-========================================================
+KLG BLOCK 1.1 — ATUALIZAÇÃO DO PROJETO ANDROID
 
-ESTE ZIP É O PROJETO-FONTE, NÃO É O APK PRONTO.
-O GitHub Actions produzirá o arquivo KLG_Block_1.0.apk.
+Este ZIP contém o projeto para o GitHub Actions gerar o APK; não é um APK pronto.
 
-ETAPA 1 - ADICIONAR AO REPOSITORIO QUE VOCE JA CRIOU
-1. Extraia este ZIP no computador.
-2. Abra a pasta extraida. Nao envie apenas o arquivo .zip ao GitHub.
-3. No GitHub, abra seu repositorio de KLG Block e clique em
-   'Adicionar arquivo' > 'Carregar arquivos' (Add file > Upload files).
-4. Selecione ou arraste TODO o conteudo da pasta extraida para o repositorio,
-   INCLUSIVE a pasta .github (ela pode ficar oculta em alguns gerenciadores).
-   As pastas app e .github precisam permanecer com as subpastas indicadas.
-5. Se o GitHub perguntar se deve atualizar arquivos ja existentes
-   (index.html, app.js, style.css etc.), envie a nova versao normalmente.
-6. Clique em 'Confirmar alteracoes' (Commit changes).
+NOVIDADES
+- Novo mascote Calango e logo KLG nas telas, ícones e abertura.
+- Mascote comemora quando o jogador completa linhas ou combina combos.
+- Partículas e brilho no tabuleiro durante as comemorações.
+- Melodia extra para combos grandes.
 
-ETAPA 2 - GERAR APK AUTOMATICAMENTE
-7. Abra a aba 'Acoes' (Actions) do repositorio.
-8. Clique no fluxo 'Gerar APK KLG Block'.
-9. Se necessario, clique 'Run workflow' > 'Run workflow'. O primeiro upload
-   para o ramo principal tambem pode iniciar o fluxo automaticamente.
-10. Abra a execucao mais recente e aguarde o sinal verde (sucesso).
-11. Desca ate 'Artifacts' e clique em 'KLG_Block_1.0_APK'.
-12. Baixe o arquivo compactado de artifact e EXTRAIA o APK de dentro:
-    KLG_Block_1.0.apk
+PRESERVADO DO KLG BLOCK 1.0
+- Tabuleiro 8x8, três peças, arrastar e soltar e toque para encaixar.
+- Pontuação, recorde, XP, moedas e salvamento local.
+- Mesmo identificador Android: br.com.klg.block.
+- Mesma chave de armazenamento WebView: klg-block-v1.0.
+- Funciona totalmente offline.
 
-ETAPA 3 - INSTALAR NO ANDROID
-13. Envie o APK extraido ao celular ou baixe-o pelo navegador do celular.
-14. Toque no APK, autorize a instalacao para esse aplicativo de arquivos
-    se o Android solicitar, e confirme 'Instalar'.
-15. Abra o icone KLG Block na tela inicial/lista de aplicativos.
+COMO ATUALIZAR NO GITHUB
+1. Antes de mexer, salve o APK 1.0 e crie uma tag ou baixe um ZIP de backup
+   do repositório atual.
+2. Extraia este ZIP no computador.
+3. No repositório GitHub, envie os arquivos substituindo os antigos.
+   Confira se há app/, .github/workflows/, index.html, app.js, style.css,
+   logo-klg.png e icon-192.png/icon-512.png nas pastas certas.
+   Em caso de uso da interface web, para sobrescrever e manter pastas,
+   é mais confiável editar arquivos existentes ou usar github.dev.
+4. Abra Ações / Actions > Gerar APK KLG Block > última execução verde.
+5. Em Artifacts, baixe KLG_Block_1.1_APK, extraia o KLG_Block_1.1.apk.
 
-GARANTIAS / LIMITES
-- O jogo roda com arquivos HTML/JS locais dentro do APK, sem servidor.
-- Nao solicita permissao de internet.
-- O progresso salva no armazenamento local do aplicativo (WebView).
-- Este APK de teste (debug) e instalavel, mas nao e um APK de producao
-  para publicar na Play Store. Para Play Store, gere um AAB de release
-  assinado com sua chave privada.
-- O projeto foi preparado, mas o APK nao foi compilado/testado nesta
-  sessao, porque o ambiente local nao possui Android SDK.
-- Se a compilacao mostrar erro (X vermelho) na aba Acoes,
-  envie captura de tela do passo que falhou para correção.
-
-ESTRUTURA IMPORTANTE
-  .github/workflows/gerar-apk.yml
-  app/build.gradle
-  app/src/main/AndroidManifest.xml
-  app/src/main/java/br/com/klg/block/MainActivity.java
-  app/src/main/res/values/styles.xml
-  app/src/main/res/drawable-nodpi/ic_launcher.png
-  index.html, style.css, app.js, logo-klg.svg (na raiz)
-
-FUTURAS ATUALIZACOES
-Para atualizar o jogo, substitua os arquivos index.html / style.css /
-app.js da raiz do repositorio. O projeto Android copia a versao atual
-desses arquivos durante cada compilacao do APK.
+ATENÇÃO IMPORTANTE SOBRE INSTALAÇÃO
+- APKs debug gerados em diferentes execuções do GitHub podem ser assinados
+  por chaves diferentes. Mesmo tendo versionCode maior, o Android pode
+  RECUSAR a instalação por cima do APK 1.0.
+- NÃO desinstale o APK 1.0 antes de avaliar se aceita perder o progresso;
+  desinstalar pode apagar recordes, moedas, XP e a partida salva.
+- A solução permanente é configurar uma chave de assinatura estável para
+  versões futuras, ou instalar uma versão separada para teste.
+- Não testamos esta compilação em um aparelho físico nesta sessão.
