@@ -1,0 +1,61 @@
+KLG BLOCK 1.0 — CALANGO EDITION
+================================
+PRIMEIRA VERSÃO JOGÁVEL - 21/11/2026
+
+O QUE FUNCIONA
+- Tabuleiro 8 × 8.
+- 3 peças por rodada (novo conjunto quando as três forem usadas).
+- Arrastar e soltar no Android, ou selecionar uma peça e tocar no tabuleiro.
+- Limpar linhas e colunas completas, com combos e pontuação.
+- Recorde, moedas, XP e nível.
+- Sons sintetizados pelo próprio aparelho, sem arquivos de áudio externos.
+- Retomar partida salva pelo armazenamento local.
+- Jogo utilizável sem internet, pois não depende de serviços externos.
+- Instalação como web app (PWA) quando hospedado em HTTPS.
+
+ARQUIVOS
+- index.html: entrada do jogo.
+- style.css: visual responsivo.
+- app.js: regras, pontuação, salvamento e controles.
+- logo-klg.svg: marca provisória ORIGINAL com calango KLG.
+- icon-192.png e icon-512.png: ícones de aplicativo.
+- manifest.webmanifest: informações para instalação como web app.
+- sw.js: cache offline para instalação PWA em HTTPS ou localhost.
+
+COMO TESTAR NO ANDROID
+OPÇÃO A — ARQUIVO ÚNICO, SEM INTERNET
+1. Envie KLG_Block_1.0_OFFLINE.html ao telefone.
+2. Abra o arquivo com um navegador que permita abrir HTML local.
+3. Clique em JOGAR AGORA. Não há acesso a servidor.
+OBS: a persistência do recorde em arquivo local pode depender das permissões
+     do navegador Android utilizado.
+
+OPÇÃO B — REPOSITÓRIO GITHUB / GITHUB PAGES
+1. Envie todos os arquivos da pasta para a raiz do repositório (sem renomear).
+2. Publique pelo GitHub Pages e acesse o endereço do site no Android.
+3. Acesse uma vez com internet para carregar os arquivos e instalar o web app.
+4. Depois, o aplicativo pode funcionar offline por meio do cache do PWA.
+     Observação: a instalação PWA exige HTTPS, fornecido pelo GitHub Pages.
+
+OPÇÃO C — APLICATIVO ANDROID (APK)
+Os arquivos podem ser incluídos localmente em um WebView ou projeto Capacitor,
+sem HTTPS para carregar a interface e sem depender de rede durante a partida.
+Este pacote é o jogo web pronto para empacotamento; NÃO contém APK.
+
+COMO JOGAR
+- Arraste uma das três peças para o tabuleiro ou selecione e toque no local desejado.
+- Complete linhas ou colunas inteiras para apagá-las.
+- Quanto maior a sequência de limpezas, maior o bônus de combo.
+- O jogo termina quando nenhuma das peças restantes cabe no tabuleiro.
+- NOVA PARTIDA reinicia a pontuação, mas preserva recorde, moedas e XP.
+
+IMPORTANTE SOBRE O LOGOTIPO
+O logo-klg.svg é uma interpretação PROVISÓRIA e original do calango KLG,
+criada para esta versão, não é necessariamente o logo oficial anterior.
+Se desejar usar exatamente o logotipo original do projeto KLG,
+envie a imagem da marca para substituirmos sem alterar as regras do jogo.
+
+VERSIONAMENTO
+Versão 1.0.0 — protótipo funcional. Testes automatizados iniciais
+executados em visualização mobile de 390 × 844 pixels, com seleção
+e arraste de peça por mouse e toque.

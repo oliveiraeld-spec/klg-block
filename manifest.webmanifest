@@ -1,0 +1,16 @@
+{
+  "name": "KLG Block — Calango Edition",
+  "short_name": "KLG Block",
+  "description": "Jogo original de blocos KLG Calango, com placar, combos, moedas e XP.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1d2b",
+  "theme_color": "#0b1d2b",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any maskable" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
