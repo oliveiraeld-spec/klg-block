@@ -35,11 +35,11 @@ jobs:
         run: gradle :app:assembleDebug --no-daemon
 
       - name: Renomear APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk KLG_Block_1.4.apk
+        run: cp app/build/outputs/apk/debug/app-debug.apk KLG_Block_1.5.apk
 
       - name: Disponibilizar o APK para baixar
         uses: actions/upload-artifact@v4
         with:
-          name: KLG_Block_1.4_APK
-          path: KLG_Block_1.4.apk
+          name: KLG_Block_1.5_APK
+          path: KLG_Block_1.5.apk
           if-no-files-found: error
