@@ -1,40 +1,35 @@
-KLG BLOCK 1.2 — CORREÇÃO DE PROGRESSO + MISSÕES DIÁRIAS
+KLG BLOCK 1.4 — MULTIJOGOS (ANDROID OFFLINE)
+========================================
+NOVIDADES
+1. Block Clássico (8x8): jogabilidade idêntica à versão 1.3.
+2. Queda de Blocos: desafio original inspirado em jogos de peças que caem (estilo Tetris); tabuleiro 10x18, sete formatos, girar, esquerda, direita, descer e soltar.
+3. Fusão 2048: deslize ou toque nas setas e combine números iguais em um tabuleiro 4x4.
 
-Este pacote contém os arquivos do projeto Android para compilar no GitHub.
-Ele NAO é um APK pronto.
+PRESERVAÇÃO DE DADOS
+- O sistema de recorde, moedas, XP, loja, skins, missões e conquistas do Block Clássico preserva as MESMAS chaves da versão 1.3.
+- Cada modo novo possui seu próprio recorde e sua própria partida salva, com uma chave nova e cópia de segurança local.
+- O código de recuperação da versão 1.4 passa a incluir os recordes dos dois jogos novos (não as partidas ativas).
+- As recompensas dos modos novos entram na carteira global do KLG Block.
+- Missões diárias e troféus existentes continuam baseados no modo Clássico; não são alterados.
 
-PRINCIPAIS MUDANÇAS
-- Preserva tabuleiro 8x8, arraste, combos, sons, logo e Calango animado.
-- Separa recorde, moedas e XP dos dados da partida, e guarda backup local redundante.
-- Reaproveita o armazenamento v1.0/v1.1 quando o aplicativo é atualizado POR CIMA.
-- Botão SALVAR / RECUPERAR PROGRESSO na tela inicial: copie o código KLG-
-  para guardar recorde, moedas e XP antes de reinstalar (nao inclui partida
-  em andamento ou missões).
-- 3 missões diárias: 5 linhas, 2 combos x2+, 20 peças. Resgate manual de
-  recompensas, uma vez por missão/dia. Reiniciam ao mudar a data local.
-- Preserva funcionamento offline; nenhuma conta ou internet necessárias.
+INSTALAR PELO GITHUB
+1. No repositório https://github.com/oliveiraeld-spec/klg-block, salve uma cópia da versão 1.3 e do código de recuperação de seu progresso.
+2. Extraia o ZIP e envie os ARQUIVOS E PASTAS INTERNOS ao repositório, preservando .github/workflows e app.
+3. Em Actions > Gerar APK KLG Block, confira a execução do workflow.
+4. Em Artifacts, baixe KLG_Block_1.4_APK e extraia KLG_Block_1.4.apk.
+5. Instale no Android. Se houver erro de assinatura de aplicativo, NÃO desinstale a versão antiga sem ter um backup do progresso; APKs debug do GitHub podem ter chaves diferentes.
 
-ATUALIZAÇÃO NO GITHUB
-1. Primeiro faça backup da versão 1.1 (GitHub > Code > Download ZIP).
-2. Extraia o pacote de atualização.
-3. Mantenha as pastas e a estrutura: app/build.gradle,
-   .github/workflows/gerar-apk.yml e arquivos web na raiz.
-4. Substitua os 8 arquivos do ZIP no repositório existente.
-   Se o upload do GitHub não sobrescrever corretamente, use o editor do
-   GitHub para alterar o arquivo existente ou github.dev.
-5. Entre em GitHub > Actions (Ações) > Gerar APK KLG Block.
-6. Após a execução verde, abra Artifacts > KLG_Block_1.2_APK,
-   extraia o arquivo KLG_Block_1.2.apk e instale no Android.
+REQUISITOS
+- Android 7.0+ (minSdk 24), projeto Gradle com Java 17.
+- O próprio APK contém index.html, app.js, arcade.js, style.css, arcade.css e imagens; roda sem rede.
+- Não é necessário GitHub Pages para instalar o APK.
 
-ATENÇÃO — PRESERVAR PROGRESSO
-- O mesmo applicationId br.com.klg.block foi mantido (versionCode 3).
-- APK debug compilado pelo GitHub pode usar uma chave diferente da versão
-  instalada. Nesse caso, o Android não permite a atualização por cima.
-- Se aparecer erro de assinatura, PARE: NÃO desinstale a versão anterior.
-  A versão 1.1 não tinha gerador de código de backup e a desinstalação
-  pode apagar recordes, moedas, XP e partida salva.
-- Este pacote não resolve sozinho uma diferença de assinatura entre APKs.
-- Para atualizações permanentes, é preciso usar uma chave de assinatura
-  estável guardada fora de repositórios públicos.
-- O teste de lógica JS passou. A compilação APK e o teste no Android real
-  dependem da execução do GitHub e do dispositivo.
+TESTES RECOMENDADOS NO APARELHO
+- Clássico: posicionamento, eliminar linhas, recorde, XP e moedas.
+- Queda de Blocos: controles de mover, girar, soltar, eliminação de linhas e recorde.
+- Fusão 2048: usar setas/deslizar, unir números, pontuação.
+- Fechar e reabrir cada modo, verificando recorde e partida.
+- Abrir Loja e confirmar que skins compradas anteriormente permanecem.
+- Gerar código de backup em Salvar/Recuperar Progresso.
+
+AVISO: a compilação Android e a instalação no dispositivo precisam ser verificadas no seu GitHub/celular. Os testes locais cobrem a interface e regras no navegador.

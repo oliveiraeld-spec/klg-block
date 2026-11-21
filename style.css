@@ -52,3 +52,38 @@
 
 .backup-card .backup-note{font-size:11px;color:#90b6c2;margin:8px 0;text-align:left}
 .backup-card #copyBackupBtn{margin-top:8px}
+
+/* KLG Block 1.3: loja, skins, conquistas e estatísticas. */
+.home-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.home-shortcuts .shortcut-btn{min-width:0;width:100%;font-size:11px;padding:9px 5px;min-height:41px;border-color:#4c8277}
+.collection-card{max-height:88svh;overflow-y:auto;overscroll-behavior:contain;padding:18px 17px 20px}
+.collection-card h2{font-size:24px;margin:6px 0 10px}
+.collection-note{color:#b1cfd2;font-size:12px;line-height:1.5;text-align:center;margin:5px 0 12px}
+.wallet-chip{font-size:14px;color:#ffe38b;font-weight:900;padding:8px 13px;background:#112e3d;border:1px solid #52674e;border-radius:14px;margin:8px auto 12px;width:max-content;max-width:100%}
+.shop-list,.achievement-list{display:flex;flex-direction:column;gap:10px}
+.shop-item,.achievement-item{background:linear-gradient(130deg,#0f2c3b,#153744);border:1px solid #325c66;border-radius:15px;padding:11px;text-align:left}
+.shop-item.active{border-color:#a5f28d;background:linear-gradient(130deg,#153c3b,#244d47)}
+.shop-item strong,.achievement-item strong{display:block;font-size:14px;color:#efffea}
+.shop-palette{display:flex;align-items:center;gap:5px;padding:9px 0}
+.shop-palette span{display:block;width:25px;height:25px;flex:0 1 25px;border:1px solid #fff5;border-radius:6px;box-shadow:inset 0 3px 1px #fff5,inset 0 -3px 1px #0003}
+.shop-description{font-size:11px;color:#bdd4c7;margin-bottom:8px}
+.shop-buy,.achievement-claim{border:0;border-radius:10px;padding:9px 12px;background:#b8fb79;color:#1a4027;font-size:10px;font-weight:1000;min-height:35px}
+.shop-buy:disabled,.achievement-claim:disabled{color:#9caeac;background:#2b5159}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}
+.stats-grid>div{background:#102b37;border:1px solid #315565;border-radius:11px;padding:8px 4px}
+.stats-grid span{display:block;font-size:9px;letter-spacing:.4px;color:#9bbbc2;font-weight:800}
+.stats-grid strong{display:block;color:#c7fd91;font-size:20px;margin-top:4px}
+.achievements-title{font-size:12px;letter-spacing:1px;font-weight:900;color:#ffdb86;margin:15px 0 10px}
+.achievement-item small{font-size:11px;color:#9ebfbe;display:block;margin-top:4px}
+.achievement-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.achievement-foot span{font-size:10px;color:#c2cfcc}
+.game-footer{gap:7px}
+.game-footer .footer-action{letter-spacing:0;font-size:10px;white-space:nowrap}
+body[data-theme="selva"] .c0{--c:#54c6ad}body[data-theme="selva"] .c1{--c:#6de679}body[data-theme="selva"] .c2{--c:#f1c35c}body[data-theme="selva"] .c3{--c:#7dc2aa}body[data-theme="selva"] .c4{--c:#b0eb7e}body[data-theme="selva"] .c5{--c:#e88b6f}
+body[data-theme="neon"] .c0{--c:#28e5fa}body[data-theme="neon"] .c1{--c:#7eff36}body[data-theme="neon"] .c2{--c:#ff7b2f}body[data-theme="neon"] .c3{--c:#bf63ff}body[data-theme="neon"] .c4{--c:#f9ef32}body[data-theme="neon"] .c5{--c:#ff55c0}
+body[data-theme="doce"] .c0{--c:#82cfef}body[data-theme="doce"] .c1{--c:#b5efa0}body[data-theme="doce"] .c2{--c:#f9adbb}body[data-theme="doce"] .c3{--c:#cfb2f4}body[data-theme="doce"] .c4{--c:#fbe59b}body[data-theme="doce"] .c5{--c:#ee96ca}
+body[data-theme="ouro"] .c0{--c:#ffe19a}body[data-theme="ouro"] .c1{--c:#ffb84a}body[data-theme="ouro"] .c2{--c:#ff8c3e}body[data-theme="ouro"] .c3{--c:#f6d264}body[data-theme="ouro"] .c4{--c:#fff1b0}body[data-theme="ouro"] .c5{--c:#e6a92d}
+body[data-theme="ouro"] .board-wrap{border-color:#e3be64;box-shadow:0 0 22px #ffd55b21}
+body[data-theme="neon"] .board-wrap{border-color:#5ef9f0;box-shadow:0 0 22px #48dffb23}
+@media(max-height:735px){.home-shortcuts .shortcut-btn{min-height:34px;padding:5px;font-size:10px}.collection-card{padding:13px}.home-screen{gap:6px}.hero-new{font-size:9px}}
+@media(max-width:360px){.game-footer .footer-action{font-size:9px;padding:7px 2px}.lines-counter{font-size:9px}}

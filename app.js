@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const SIZE = 8, STORAGE = 'klg-block-v1.0', PROFILE_KEY = 'klg-block-profile-v1', PROFILE_BACKUP = 'klg-block-profile-backup-v1';
+  const EXTRAS_KEY = 'klg-block-extras-v1', EXTRAS_BACKUP = 'klg-block-extras-backup-v1';
   const XP_LEVEL = 180;
   const SHAPES = [
     [[0,0]], [[0,0],[0,1]], [[0,0],[1,0]],
@@ -35,6 +36,23 @@
     {id:'combos',name:'Rei do combo',description:'Faça 2 combos de sequência ×2 ou maior.',target:2,coins:15,xp:40,icon:'🔥'},
     {id:'pieces',name:'Mestre dos blocos',description:'Encaixe 20 peças no tabuleiro.',target:20,coins:8,xp:25,icon:'🧩'}
   ];
+  // A Loja, as estatísticas e as conquistas usam uma chave nova para preservar
+  // integralmente a partida e o perfil aprovados na versão 1.2.
+  const THEMES = [
+    {id:'classic',name:'Clássico KLG',icon:'🌿',price:0,minLevel:1,colors:['#5ed8ef','#a4f36d','#ffa860','#db91fa','#ffd56e','#fc7e9d']},
+    {id:'selva',name:'Selva Calango',icon:'🌳',price:25,minLevel:1,colors:['#54c6ad','#6de679','#f1c35c','#7dc2aa','#b0eb7e','#e88b6f']},
+    {id:'neon',name:'Neon Turbo',icon:'⚡',price:60,minLevel:2,colors:['#28e5fa','#7eff36','#ff7b2f','#bf63ff','#f9ef32','#ff55c0']},
+    {id:'doce',name:'Doces Coloridos',icon:'🍬',price:90,minLevel:3,colors:['#82cfef','#b5efa0','#f9adbb','#cfb2f4','#fbe59b','#ee96ca']},
+    {id:'ouro',name:'Tesouro do Calango',icon:'🏆',price:120,minLevel:5,colors:['#ffe19a','#ffb84a','#ff8c3e','#f6d264','#fff1b0','#e6a92d']}
+  ];
+  const ACHIEVEMENTS = [
+    {id:'explorer',name:'Explorador',description:'Comece 3 partidas.',key:'games',target:3,coins:10,xp:20,icon:'🦎'},
+    {id:'combo',name:'Faísca KLG',description:'Faça 1 combo de sequência ×2.',key:'combos',target:1,coins:12,xp:25,icon:'🔥'},
+    {id:'blocks',name:'Construtor',description:'Encaixe 40 peças.',key:'pieces',target:40,coins:18,xp:35,icon:'🧩'},
+    {id:'lines',name:'Mestre das Linhas',description:'Elimine 20 linhas ou colunas.',key:'lines',target:20,coins:24,xp:45,icon:'🏆'}
+  ];
+  const freshStats = () => ({games:0,pieces:0,lines:0,combos:0,bestCombo:0,points:0});
+  let extras={owned:['classic'],active:'classic',stats:freshStats(),claimed:[],leveledTo:1}, extrasRevision=0;
   const today = () => {const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');};
   const validNumber = v => Number.isSafeInteger(v) && v >= 0 && v <= 999999999;
   const safeNumber = v => validNumber(v) ? v : 0;
@@ -46,6 +64,87 @@
     return {date:value.date,pieces:safeNumber(value.pieces),lines:safeNumber(value.lines),combos:safeNumber(value.combos),claimed:Array.isArray(value.claimed)?value.claimed.filter(v => MISSIONS.some(m=>m.id===v)):[]};
   }
   function refreshDaily(){if(daily.date!==today())daily={date:today(),pieces:0,lines:0,combos:0,claimed:[]};}
+  function normalizedExtras(raw) {
+    const owned = Array.isArray(raw?.owned)?raw.owned.filter(id=>THEMES.some(t=>t.id===id)):[];
+    const distinct=[...new Set(['classic',...owned])];
+    const stats=freshStats();
+    if(raw?.stats && typeof raw.stats==='object')for(const key of Object.keys(stats))stats[key]=safeNumber(raw.stats[key]);
+    const claimed=Array.isArray(raw?.claimed)?[...new Set(raw.claimed.filter(id=>ACHIEVEMENTS.some(a=>a.id===id)))]:[];
+    const active=distinct.includes(raw?.active)?raw.active:'classic';
+    return {owned:distinct,active,stats,claimed,leveledTo:validNumber(raw?.leveledTo)?raw.leveledTo:level()};
+  }
+  function validExtrasRecord(raw){return raw && raw.v===1 && validNumber(raw.rev);}
+  function addStat(key,value=1){extras.stats[key]=Math.min(999999999,extras.stats[key]+value);}
+  function applyTheme(){document.body.dataset.theme=extras.active;}
+  function grantLevelRewards(previousLevel){
+    const target=level();let gained=0;
+    // Apenas níveis ganhos agora recebem bônus; não há créditos retroativos.
+    if(target>previousLevel){
+      for(let n=Math.max(previousLevel+1,extras.leveledTo+1);n<=target&&n<10000;n++)gained+=8;
+      state.coins=Math.min(999999999,state.coins+gained);
+      extras.leveledTo=Math.max(extras.leveledTo,target);
+      if(gained && !el('gameScreen').classList.contains('hidden'))celebrate('NÍVEL '+target+'!',2);
+    }
+    return gained;
+  }
+  function renderShop(){
+    const host=el('shopList');if(!host)return;host.replaceChildren();
+    for(const theme of THEMES){
+      const owned=extras.owned.includes(theme.id),active=extras.active===theme.id;
+      const item=document.createElement('div');item.className='shop-item'+(active?' active':'');
+      const title=document.createElement('strong');title.textContent=theme.icon+' '+theme.name;
+      const preview=document.createElement('div');preview.className='shop-palette';
+      theme.colors.forEach(color=>{const tile=document.createElement('span');tile.style.backgroundColor=color;preview.append(tile);});
+      const meta=document.createElement('div');meta.className='shop-description';
+      meta.textContent=owned?'Desbloqueado':`🪙 ${theme.price} moedas · Nível ${theme.minLevel}`;
+      const btn=document.createElement('button');btn.type='button';btn.className='shop-buy';
+      btn.textContent=active?'EM USO':owned?'USAR':level()<theme.minLevel?'NÍVEL '+theme.minLevel:state.coins<theme.price?'FALTAM MOEDAS':'COMPRAR';
+      btn.disabled=active||(!owned&&(level()<theme.minLevel||state.coins<theme.price));
+      btn.addEventListener('click',()=>useTheme(theme.id));
+      item.append(title,preview,meta,btn);host.append(item);
+    }
+    el('shopWallet').textContent=format(state.coins);
+  }
+  function useTheme(id){
+    const theme=THEMES.find(t=>t.id===id);if(!theme)return;
+    if(!extras.owned.includes(id)){
+      if(level()<theme.minLevel||state.coins<theme.price)return;
+      state.coins-=theme.price;extras.owned.push(id);
+    }
+    extras.active=id;applyTheme();save();renderShop();renderStats();beep('win');
+    el('shopMessage').textContent='Estilo '+theme.name+' aplicado! Seu progresso foi preservado.';
+    el('homeCoins').textContent=format(state.coins);
+  }
+  function renderAchievements(){
+    const host=el('achievementList');host.replaceChildren();
+    for(const achievement of ACHIEVEMENTS){
+      const progress=Math.min(achievement.target,extras.stats[achievement.key]),claimed=extras.claimed.includes(achievement.id);
+      const item=document.createElement('div');item.className='achievement-item';
+      const title=document.createElement('strong');title.textContent=achievement.icon+' '+achievement.name;
+      const note=document.createElement('small');note.textContent=achievement.description;
+      const foot=document.createElement('div');foot.className='achievement-foot';
+      const count=document.createElement('span');count.textContent=progress+'/'+achievement.target+' · 🪙 '+achievement.coins+' · ⚡ '+achievement.xp+' XP';
+      const btn=document.createElement('button');btn.type='button';btn.className='achievement-claim';
+      btn.textContent=claimed?'RESGATADO':progress===achievement.target?'RESGATAR':'EM ANDAMENTO';
+      btn.disabled=claimed||progress!==achievement.target;
+      btn.addEventListener('click',()=>claimAchievement(achievement.id));
+      foot.append(count,btn);item.append(title,note,foot);host.append(item);
+    }
+  }
+  function renderLifetime(){
+    for(const key of Object.keys(extras.stats)){const node=el('stat-'+key);if(node)node.textContent=format(extras.stats[key]);}
+    el('stat-level').textContent=level();el('stat-totalxp').textContent=format(state.xp);
+    renderAchievements();
+  }
+  function claimAchievement(id){
+    const a=ACHIEVEMENTS.find(item=>item.id===id);
+    if(!a||extras.claimed.includes(id)||extras.stats[a.key]<a.target)return;
+    extras.claimed.push(id);const previous=level();state.coins+=a.coins;state.xp+=a.xp;
+    const bonus=grantLevelRewards(previous);save();renderLifetime();renderStats();renderMissions();
+    el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();
+    el('statsMessage').textContent='Conquista resgatada! +'+(a.coins+bonus)+' moedas e +'+a.xp+' XP.';
+    beep('win');
+  }
   function profileIsValid(obj){return obj && obj.v===1 && ['best','coins','xp'].every(k=>validNumber(obj[k])) && validNumber(obj.rev);}
   function load() {
     // A partida e as conquistas são recuperadas independentemente. Um tabuleiro
@@ -67,6 +166,12 @@
       state.coins=profile.coins;state.xp=profile.xp;
       daily=normalizeDaily(profile.daily);
     }
+    const extraCandidates=[parsed(EXTRAS_KEY),parsed(EXTRAS_BACKUP)].filter(validExtrasRecord).sort((a,b)=>b.rev-a.rev);
+    if(extraCandidates.length){
+      extrasRevision=extraCandidates[0].rev;
+      extras=normalizedExtras(extraCandidates[0]);
+    }else {extras=normalizedExtras(null);extras.leveledTo=level();}
+    applyTheme();
     // best é pelo menos a pontuação da partida atual.
     state.best=Math.max(state.best,state.score);
     refreshDaily();
@@ -85,6 +190,9 @@
       const profile={v:1,rev:++saveRevision,best:state.best,coins:state.coins,xp:state.xp,daily};
       localStorage.setItem(PROFILE_KEY,JSON.stringify(profile));
       localStorage.setItem(PROFILE_BACKUP,JSON.stringify(profile));
+      const newExtra={v:1,rev:++extrasRevision,...extras};
+      localStorage.setItem(EXTRAS_KEY,JSON.stringify(newExtra));
+      localStorage.setItem(EXTRAS_BACKUP,JSON.stringify(newExtra));
       storageWorking=true;
     } catch(e) { storageWorking=false; }
     updateSaveStatus();return storageWorking;
@@ -121,11 +229,11 @@
   function claimMission(id){
     refreshDaily();const mission=MISSIONS.find(m=>m.id===id);
     if(!mission || daily.claimed.includes(id) || daily[id]<mission.target)return;
-    daily.claimed.push(id);state.coins+=mission.coins;state.xp+=mission.xp;save();
+    daily.claimed.push(id);const oldLevel=level();state.coins+=mission.coins;state.xp+=mission.xp;grantLevelRewards(oldLevel);save();
     el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();renderStats();renderMissions();beep('win');
     el('missionMessage').textContent='Prêmio recebido! +'+mission.coins+' moedas e +'+mission.xp+' XP.';
   }
-  function backupCode(){return 'KLG-'+btoa(JSON.stringify({v:1,b:state.best,c:state.coins,x:state.xp}));}
+  function backupCode(){return 'KLG-'+btoa(JSON.stringify({v:2,b:state.best,c:state.coins,x:state.xp,e:extras,a:window.KLGArcade?.exportBackup?.()||null}));}
   function showBackup(){el('backupCode').value=backupCode();el('restoreCode').value='';el('backupMessage').textContent='Guarde o código antes de reinstalar o aplicativo.';show('backupModal');}
   async function copyBackup(){
     const field=el('backupCode');field.focus();field.select();
@@ -139,11 +247,21 @@
     try {
       const raw=el('restoreCode').value.trim().replace(/\s/g,'').replace(/^KLG-/i,'');
       const data=JSON.parse(atob(raw));
-      if(data.v!==1||!validNumber(data.b)||!validNumber(data.c)||!validNumber(data.x))throw new Error('Código inválido');
+      if(![1,2].includes(data.v)||!validNumber(data.b)||!validNumber(data.c)||!validNumber(data.x))throw new Error('Código inválido');
       // Recuperação nunca reduz as conquistas existentes.
       state.best=Math.max(state.best,data.b);state.coins=Math.max(state.coins,data.c);state.xp=Math.max(state.xp,data.x);
+      if(data.v===2&&data.e){
+        const restored=normalizedExtras(data.e);
+        extras.owned=[...new Set([...extras.owned,...restored.owned])];
+        if(extras.owned.includes(restored.active))extras.active=restored.active;
+        for(const key of Object.keys(extras.stats))extras.stats[key]=Math.max(extras.stats[key],restored.stats[key]);
+        extras.claimed=[...new Set([...extras.claimed,...restored.claimed])];
+        extras.leveledTo=Math.max(extras.leveledTo,restored.leveledTo);
+      }
+      extras.leveledTo=Math.max(extras.leveledTo,level());applyTheme();
+      if(data.a && window.KLGArcade?.importBackup)window.KLGArcade.importBackup(data.a);
       save();el('backupCode').value=backupCode();el('backupMessage').textContent='Conquistas recuperadas! Confira recorde, moedas e nível na tela inicial.';
-      el('homeBest').textContent=format(state.best);el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();renderStats();
+      el('homeBest').textContent=format(state.best);el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();renderStats();renderShop();renderLifetime();
     }catch(e){el('backupMessage').textContent='Código inválido. Confira se foi copiado por inteiro.';}
   }
 
@@ -170,7 +288,7 @@
   function newGame() {
     clearDrag();clearCheer();
     state.board=blankBoard(); state.tray=[];state.score=0;state.lines=0;state.combo=0;state.gameOver=false;state.hasGame=true;
-    selected=null;newSet();save();hide('endModal');showGame();say('Arraste uma peça para jogar.');
+    selected=null;newSet();addStat('games');save();hide('endModal');showGame();say('Arraste uma peça para jogar.');
   }
   function show(id) {el(id).classList.remove('hidden');}
   function hide(id) {el(id).classList.add('hidden');}
@@ -268,6 +386,7 @@
   function place(index,row,col) {
     if(state.gameOver || !state.tray[index]) return false;
     const piece=state.tray[index];if(!canFit(piece,row,col)){say('Não cabe aqui! Tente outro espaço.',true);beep('fail');return false;}
+    const scoreBefore=state.score,levelBefore=level(),bestBefore=state.best;
     const occupied=shape(piece).map(([r,c])=>[row+r,col+c]);
     for(const [r,c]of occupied) state.board[r][c]=piece.color;
     state.tray[index]=null;state.score+=occupied.length*10;state.xp+=occupied.length*2;
@@ -290,12 +409,18 @@
       say('Mandou bem! '+lineCount+' linha(s) eliminada(s).');beep(lineCount>=3||state.combo>=3?'super':state.combo>=2?'combo':'win');
     } else {state.combo=0;say('Continue encaixando para completar linhas.');beep('tap');}
     const missionComplete=updateMissionProgress(lineCount,state.combo);
+    addStat('pieces');addStat('lines',lineCount);addStat('points',state.score-scoreBefore);
+    if(state.combo>=2)addStat('combos');
+    extras.stats.bestCombo=Math.max(extras.stats.bestCombo,state.combo);
     if(state.score>state.best){state.best=state.score;}
+    const levelBonus=grantLevelRewards(levelBefore);
+    if(bestBefore>0&&state.best>bestBefore&&!lineCount)celebrate('NOVO RECORDE!',1);
     selected=null;
     if(state.tray.every(piece=>piece===null))newSet();
     state.gameOver=!state.tray.some(piece=>piece&&hasSpace(piece));
     save();render();
     if(missionComplete) say('🎁 Missão concluída! Resgate o prêmio em MISSÕES.');
+    else if(levelBonus)say('⚡ Novo nível! +'+levelBonus+' moedas de recompensa.');
     if(cleared.length){clearTimeout(flashTimer);for(const [r,c]of cleared){const node=el('board').children[r*SIZE+c];if(node)node.classList.add('cleared');}flashTimer=setTimeout(()=>el('board').querySelectorAll('.cleared').forEach(n=>n.classList.remove('cleared')),450);}
     if(state.gameOver) setTimeout(endGame,600);
     return true;
@@ -383,6 +508,14 @@
     el('gameMissionBtn').addEventListener('click',()=>{el('missionMessage').textContent='';renderMissions();show('missionsModal');});
     el('closeMissionBtn').addEventListener('click',()=>hide('missionsModal'));
     el('missionsModal').addEventListener('click',e=>{if(e.target===el('missionsModal'))hide('missionsModal');});
+    const openShop=()=>{el('shopMessage').textContent='';renderShop();show('shopModal');};
+    el('shopBtn').addEventListener('click',openShop);
+    el('gameShopBtn').addEventListener('click',openShop);
+    el('closeShopBtn').addEventListener('click',()=>hide('shopModal'));
+    el('shopModal').addEventListener('click',e=>{if(e.target===el('shopModal'))hide('shopModal');});
+    el('statsBtn').addEventListener('click',()=>{el('statsMessage').textContent='';renderLifetime();show('statsModal');});
+    el('closeStatsBtn').addEventListener('click',()=>hide('statsModal'));
+    el('statsModal').addEventListener('click',e=>{if(e.target===el('statsModal'))hide('statsModal');});
     el('backupBtn').addEventListener('click',showBackup);
     el('closeBackupBtn').addEventListener('click',()=>hide('backupModal'));
     el('backupModal').addEventListener('click',e=>{if(e.target===el('backupModal'))hide('backupModal');});
@@ -397,8 +530,25 @@
     el('tray').addEventListener('pointercancel',clearDrag);
     el('board').addEventListener('click',onBoardClick);
     window.addEventListener('blur',clearDrag);
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'){hide('howModal');hide('missionsModal');hide('backupModal');if(!el('gameScreen').classList.contains('hidden')&&el('endModal').classList.contains('hidden'))showHome();}});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){hide('howModal');hide('missionsModal');hide('backupModal');hide('shopModal');hide('statsModal');if(!el('gameScreen').classList.contains('hidden')&&el('endModal').classList.contains('hidden'))showHome();}});
   }
+  // Ponte controlada: os modos extras acessam a carteira sem tocar nas
+  // chaves de salvamento do clássico ou redefinir a partida anterior.
+  window.KLGBridge={
+    award(coins,xp){
+      if(!validNumber(coins)||!validNumber(xp)||coins>200||xp>500)return false;
+      const before=level();
+      state.coins=Math.min(999999999,state.coins+coins);
+      state.xp=Math.min(999999999,state.xp+xp);
+      grantLevelRewards(before);save();
+      el('homeCoins').textContent=format(state.coins);
+      el('homeLevel').textContent=level();
+      return true;
+    },
+    toHome:showHome,
+    refreshHome:showHome,
+    soundEnabled:()=>state.sound
+  };
   function init(){load();bindEvents();showHome();if('serviceWorker' in navigator && location.protocol.startsWith('http') && location.hostname !== 'appassets.androidplatform.net')navigator.serviceWorker.register('./sw.js').catch(()=>{});}
   document.addEventListener('DOMContentLoaded',init);
 })();
