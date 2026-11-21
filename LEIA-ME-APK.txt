@@ -1,0 +1,59 @@
+KLG BLOCK 1.0 - GERAR UM APK NO GITHUB (SEM ANDROID STUDIO)
+========================================================
+
+ESTE ZIP É O PROJETO-FONTE, NÃO É O APK PRONTO.
+O GitHub Actions produzirá o arquivo KLG_Block_1.0.apk.
+
+ETAPA 1 - ADICIONAR AO REPOSITORIO QUE VOCE JA CRIOU
+1. Extraia este ZIP no computador.
+2. Abra a pasta extraida. Nao envie apenas o arquivo .zip ao GitHub.
+3. No GitHub, abra seu repositorio de KLG Block e clique em
+   'Adicionar arquivo' > 'Carregar arquivos' (Add file > Upload files).
+4. Selecione ou arraste TODO o conteudo da pasta extraida para o repositorio,
+   INCLUSIVE a pasta .github (ela pode ficar oculta em alguns gerenciadores).
+   As pastas app e .github precisam permanecer com as subpastas indicadas.
+5. Se o GitHub perguntar se deve atualizar arquivos ja existentes
+   (index.html, app.js, style.css etc.), envie a nova versao normalmente.
+6. Clique em 'Confirmar alteracoes' (Commit changes).
+
+ETAPA 2 - GERAR APK AUTOMATICAMENTE
+7. Abra a aba 'Acoes' (Actions) do repositorio.
+8. Clique no fluxo 'Gerar APK KLG Block'.
+9. Se necessario, clique 'Run workflow' > 'Run workflow'. O primeiro upload
+   para o ramo principal tambem pode iniciar o fluxo automaticamente.
+10. Abra a execucao mais recente e aguarde o sinal verde (sucesso).
+11. Desca ate 'Artifacts' e clique em 'KLG_Block_1.0_APK'.
+12. Baixe o arquivo compactado de artifact e EXTRAIA o APK de dentro:
+    KLG_Block_1.0.apk
+
+ETAPA 3 - INSTALAR NO ANDROID
+13. Envie o APK extraido ao celular ou baixe-o pelo navegador do celular.
+14. Toque no APK, autorize a instalacao para esse aplicativo de arquivos
+    se o Android solicitar, e confirme 'Instalar'.
+15. Abra o icone KLG Block na tela inicial/lista de aplicativos.
+
+GARANTIAS / LIMITES
+- O jogo roda com arquivos HTML/JS locais dentro do APK, sem servidor.
+- Nao solicita permissao de internet.
+- O progresso salva no armazenamento local do aplicativo (WebView).
+- Este APK de teste (debug) e instalavel, mas nao e um APK de producao
+  para publicar na Play Store. Para Play Store, gere um AAB de release
+  assinado com sua chave privada.
+- O projeto foi preparado, mas o APK nao foi compilado/testado nesta
+  sessao, porque o ambiente local nao possui Android SDK.
+- Se a compilacao mostrar erro (X vermelho) na aba Acoes,
+  envie captura de tela do passo que falhou para correção.
+
+ESTRUTURA IMPORTANTE
+  .github/workflows/gerar-apk.yml
+  app/build.gradle
+  app/src/main/AndroidManifest.xml
+  app/src/main/java/br/com/klg/block/MainActivity.java
+  app/src/main/res/values/styles.xml
+  app/src/main/res/drawable-nodpi/ic_launcher.png
+  index.html, style.css, app.js, logo-klg.svg (na raiz)
+
+FUTURAS ATUALIZACOES
+Para atualizar o jogo, substitua os arquivos index.html / style.css /
+app.js da raiz do repositorio. O projeto Android copia a versao atual
+desses arquivos durante cada compilacao do APK.

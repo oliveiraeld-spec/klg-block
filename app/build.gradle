@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'br.com.klg.block'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.com.klg.block'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Os arquivos web são copiados automaticamente da raiz do GitHub.
+    sourceSets {
+        main {
+            assets.srcDir(layout.buildDirectory.dir('generated/klgAssets'))
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.14.0'
+}
+
+// Mantém o projeto Android sincronizado com index.html, app.js e style.css.
+def prepararArquivos = tasks.register('prepararArquivosDoJogo', Sync) {
+    from(rootProject.projectDir) {
+        include 'index.html', 'app.js', 'style.css', 'logo-klg.svg'
+        include 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'sw.js'
+        filesMatching('app.js') {
+            // O APK contém os arquivos internamente, então não precisa instalar PWA/service worker.
+            filter { line -> line.replace(
+                "location.protocol.startsWith('http')",
+                "location.protocol.startsWith('http') && location.hostname !== 'appassets.androidplatform.net'"
+            ) }
+        }
+    }
+    into(layout.buildDirectory.dir('generated/klgAssets/www'))
+}
+
+tasks.matching { it.name.startsWith('merge') && it.name.endsWith('Assets') }.configureEach {
+    dependsOn(prepararArquivos)
+}
