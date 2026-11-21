@@ -1,7 +1,7 @@
 {
-  "name": "KLG Block 1.1 — Calango Edition",
+  "name": "KLG Block 1.2 — Calango Edition",
   "short_name": "KLG Block",
-  "description": "KLG Block: jogo original de blocos com mascote KLG, combos animados e progresso offline.",
+  "description": "KLG Block 1.2: missões diárias e recuperação de progresso offline.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

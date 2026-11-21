@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#0b1d2b" />
   <meta name="description" content="KLG Block: encaixe blocos, faça combos e suba de nível com o Calango!" />
-  <title>KLG Block 1.1 — Calango</title>
+  <title>KLG Block 1.2 — Calango</title>
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="style.css" />
@@ -15,7 +15,7 @@
   <div class="ambient ambient-b" aria-hidden="true"></div>
   <main class="app" id="app">
     <section class="screen home-screen" id="homeScreen" aria-label="Tela inicial">
-      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.1</span></div>
+      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.2</span></div>
       <div class="hero">
         <div class="hero-halo"><img src="logo-klg.png" alt="Calango mascote KLG" class="hero-logo" /></div>
         <div class="brand-kicker">O DESAFIO DO CALANGO</div><div class="hero-new">✨ NOVO MASCOTE KLG</div>
@@ -30,9 +30,11 @@
       <div class="home-actions">
         <button id="playBtn" class="main-btn" type="button"><span>▶</span> JOGAR AGORA</button>
         <button id="resumeBtn" class="secondary-btn hidden" type="button">CONTINUAR PARTIDA</button>
+        <button id="missionBtn" class="secondary-btn mission-primary" type="button">🎯 MISSÕES DIÁRIAS</button>
         <button id="howBtn" class="plain-btn" type="button">? COMO JOGAR</button>
+        <button id="backupBtn" class="plain-btn backup-access" type="button">🔐 SALVAR / RECUPERAR PROGRESSO</button>
       </div>
-      <div class="home-footer">Feito para jogar no celular <span>✦</span> Sem internet</div>
+      <div class="home-footer">Feito para jogar no celular <span>✦</span> Sem internet<br /><span id="saveStatus" class="save-status">✓ Progresso guardado neste aparelho</span></div>
     </section>
 
     <section class="screen game-screen hidden" id="gameScreen" aria-label="Jogo">
@@ -62,7 +64,7 @@
         <div class="tray" id="tray" aria-label="Peças disponíveis"></div>
         <p class="tip" id="tip" aria-live="polite">Arraste uma peça até o tabuleiro.</p>
       </div>
-      <div class="game-footer"><button id="restartBtn" type="button" class="footer-action">↻ NOVA PARTIDA</button><div class="lines-counter">LINHAS <strong id="linesValue">0</strong></div></div>
+      <div class="game-footer"><button id="restartBtn" type="button" class="footer-action">↻ NOVA PARTIDA</button><button id="gameMissionBtn" type="button" class="footer-action">🎯 MISSÕES</button><div class="lines-counter">LINHAS <strong id="linesValue">0</strong></div></div>
     </section>
   </main>
 
@@ -79,6 +81,27 @@
       <div class="result-number" id="finalScore">0</div><span class="result-caption">PONTOS NA PARTIDA</span>
       <div class="result-meta"><span>🏆 Recorde <b id="finalBest">0</b></span><span>🧱 Linhas <b id="finalLines">0</b></span></div>
       <button id="againBtn" type="button" class="main-btn">JOGAR NOVAMENTE</button><button id="endHomeBtn" type="button" class="plain-btn">VOLTAR AO INÍCIO</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="missionsModal" role="dialog" aria-modal="true" aria-labelledby="missionsTitle">
+    <div class="modal-card missions-card"><div class="modal-icon">🎯</div><h2 id="missionsTitle">Missões do Calango</h2>
+      <div class="mission-intro">Missões de <b id="missionDate">--/--/----</b> · Prêmios por desempenho</div>
+      <div id="missionList" class="mission-list"></div><div id="missionMessage" class="mission-message" aria-live="polite"></div>
+      <button id="closeMissionBtn" type="button" class="secondary-btn modal-close">VOLTAR AO JOGO</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="backupModal" role="dialog" aria-modal="true" aria-labelledby="backupTitle">
+    <div class="modal-card backup-card"><div class="modal-icon">🔐</div><h2 id="backupTitle">Proteja seu progresso</h2>
+      <p>Copie e guarde este código para recuperar <b>recorde, moedas e XP</b> caso precise reinstalar o jogo.</p>
+      <label for="backupCode">SEU CÓDIGO DE RECUPERAÇÃO</label>
+      <textarea id="backupCode" rows="3" readonly spellcheck="false" aria-label="Código para guardar"></textarea>
+      <button id="copyBackupBtn" type="button" class="secondary-btn modal-close">📋 COPIAR CÓDIGO</button>
+      <label for="restoreCode">RESTAURAR CÓDIGO SALVO</label>
+      <textarea id="restoreCode" rows="3" spellcheck="false" placeholder="Cole aqui seu código KLG-..."></textarea>
+      <p class="backup-note">O código recupera recorde, moedas e XP, mas não a partida atual nem missões. Guarde fora do aplicativo.</p>
+      <div id="backupMessage" class="backup-message" aria-live="polite"></div>
+      <button id="restoreBtn" type="button" class="secondary-btn modal-close">RECUPERAR PROGRESSO</button>
+      <button id="closeBackupBtn" type="button" class="plain-btn">FECHAR</button>
     </div>
   </div>
   <script src="app.js" defer></script>

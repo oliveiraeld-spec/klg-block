@@ -23,3 +23,32 @@
 @keyframes halo-spin{to{transform:rotate(360deg)}}
 @media(max-height:735px){.mascot-cheer img{height:80px;width:80px}.mascot-cheer{top:35px}.mascot-speech{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.party-particles{display:none}.mascot-cheer{transition:none}}
+
+/* KLG Block 1.2 — missões e recuperação do progresso */
+.mission-primary{background:linear-gradient(145deg,#183f51,#255957);border-color:#75bb83;color:#d9ffba}
+.backup-access{font-size:10px;min-height:28px;color:#9abecb}
+.save-status{display:inline-block;margin-top:6px;color:#a5ecb4;font-size:10px}
+.save-status.save-error{color:#ffcc8d}
+.game-footer{gap:10px;flex-wrap:wrap}
+.missions-card,.backup-card{max-height:90svh;overflow:auto;text-align:center}
+.mission-intro{color:#a9c8c8;font-size:12px;margin:-5px 0 16px}
+.mission-list{display:flex;flex-direction:column;gap:10px}
+.mission-item{background:#0e2938;border:1px solid #386270;border-radius:14px;padding:12px;text-align:left}
+.mission-head{display:flex;align-items:center;gap:9px}
+.mission-icon{font-size:26px}
+.mission-head strong{display:block;font-size:14px;color:#ebfff5}
+.mission-head small{display:block;margin-top:3px;color:#a1c0c3;font-size:11px}
+.mission-track{height:7px;border-radius:8px;background:#284e5a;margin:11px 0 9px;overflow:hidden}
+.mission-track span{display:block;height:100%;background:linear-gradient(90deg,#84eec8,#c5ff73);border-radius:8px}
+.mission-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;color:#a8c9c9;font-size:11px;font-weight:700}
+.mission-claim{background:#c8ff85;border:0;border-radius:10px;padding:9px 11px;color:#1b392f;font-size:10px;font-weight:1000;white-space:nowrap}
+.mission-claim:disabled{background:#284c55;color:#91b7b7;opacity:1}
+.modal-close{width:100%;margin-top:14px}
+.mission-message,.backup-message{min-height:18px;margin-top:12px;color:#ffdd85;font-weight:800;font-size:12px;line-height:1.45}
+.backup-card label{display:block;text-align:left;color:#c0f5bb;font-size:10px;font-weight:900;letter-spacing:.6px;margin:12px 0 5px}
+.backup-card textarea{display:block;width:100%;resize:none;user-select:text;-webkit-user-select:text;padding:9px 10px;background:#0b2534;color:#e4fff2;border:1px solid #4b7980;border-radius:11px;font:12px/1.5 monospace;overflow-wrap:anywhere}
+.backup-card .plain-btn{margin-top:8px}
+@media(max-height:735px){.home-screen{gap:7px;padding-top:12px;padding-bottom:10px}.hero-halo{width:min(38vw,170px);height:min(38vw,170px)}.home-actions{gap:6px}.home-actions .main-btn{min-height:49px}.home-stats>div{padding:6px 4px}.home-footer{font-size:9px}}
+
+.backup-card .backup-note{font-size:11px;color:#90b6c2;margin:8px 0;text-align:left}
+.backup-card #copyBackupBtn{margin-top:8px}

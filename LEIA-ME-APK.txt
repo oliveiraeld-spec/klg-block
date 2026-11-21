@@ -1,38 +1,40 @@
-KLG BLOCK 1.1 — ATUALIZAÇÃO DO PROJETO ANDROID
+KLG BLOCK 1.2 — CORREÇÃO DE PROGRESSO + MISSÕES DIÁRIAS
 
-Este ZIP contém o projeto para o GitHub Actions gerar o APK; não é um APK pronto.
+Este pacote contém os arquivos do projeto Android para compilar no GitHub.
+Ele NAO é um APK pronto.
 
-NOVIDADES
-- Novo mascote Calango e logo KLG nas telas, ícones e abertura.
-- Mascote comemora quando o jogador completa linhas ou combina combos.
-- Partículas e brilho no tabuleiro durante as comemorações.
-- Melodia extra para combos grandes.
+PRINCIPAIS MUDANÇAS
+- Preserva tabuleiro 8x8, arraste, combos, sons, logo e Calango animado.
+- Separa recorde, moedas e XP dos dados da partida, e guarda backup local redundante.
+- Reaproveita o armazenamento v1.0/v1.1 quando o aplicativo é atualizado POR CIMA.
+- Botão SALVAR / RECUPERAR PROGRESSO na tela inicial: copie o código KLG-
+  para guardar recorde, moedas e XP antes de reinstalar (nao inclui partida
+  em andamento ou missões).
+- 3 missões diárias: 5 linhas, 2 combos x2+, 20 peças. Resgate manual de
+  recompensas, uma vez por missão/dia. Reiniciam ao mudar a data local.
+- Preserva funcionamento offline; nenhuma conta ou internet necessárias.
 
-PRESERVADO DO KLG BLOCK 1.0
-- Tabuleiro 8x8, três peças, arrastar e soltar e toque para encaixar.
-- Pontuação, recorde, XP, moedas e salvamento local.
-- Mesmo identificador Android: br.com.klg.block.
-- Mesma chave de armazenamento WebView: klg-block-v1.0.
-- Funciona totalmente offline.
+ATUALIZAÇÃO NO GITHUB
+1. Primeiro faça backup da versão 1.1 (GitHub > Code > Download ZIP).
+2. Extraia o pacote de atualização.
+3. Mantenha as pastas e a estrutura: app/build.gradle,
+   .github/workflows/gerar-apk.yml e arquivos web na raiz.
+4. Substitua os 8 arquivos do ZIP no repositório existente.
+   Se o upload do GitHub não sobrescrever corretamente, use o editor do
+   GitHub para alterar o arquivo existente ou github.dev.
+5. Entre em GitHub > Actions (Ações) > Gerar APK KLG Block.
+6. Após a execução verde, abra Artifacts > KLG_Block_1.2_APK,
+   extraia o arquivo KLG_Block_1.2.apk e instale no Android.
 
-COMO ATUALIZAR NO GITHUB
-1. Antes de mexer, salve o APK 1.0 e crie uma tag ou baixe um ZIP de backup
-   do repositório atual.
-2. Extraia este ZIP no computador.
-3. No repositório GitHub, envie os arquivos substituindo os antigos.
-   Confira se há app/, .github/workflows/, index.html, app.js, style.css,
-   logo-klg.png e icon-192.png/icon-512.png nas pastas certas.
-   Em caso de uso da interface web, para sobrescrever e manter pastas,
-   é mais confiável editar arquivos existentes ou usar github.dev.
-4. Abra Ações / Actions > Gerar APK KLG Block > última execução verde.
-5. Em Artifacts, baixe KLG_Block_1.1_APK, extraia o KLG_Block_1.1.apk.
-
-ATENÇÃO IMPORTANTE SOBRE INSTALAÇÃO
-- APKs debug gerados em diferentes execuções do GitHub podem ser assinados
-  por chaves diferentes. Mesmo tendo versionCode maior, o Android pode
-  RECUSAR a instalação por cima do APK 1.0.
-- NÃO desinstale o APK 1.0 antes de avaliar se aceita perder o progresso;
-  desinstalar pode apagar recordes, moedas, XP e a partida salva.
-- A solução permanente é configurar uma chave de assinatura estável para
-  versões futuras, ou instalar uma versão separada para teste.
-- Não testamos esta compilação em um aparelho físico nesta sessão.
+ATENÇÃO — PRESERVAR PROGRESSO
+- O mesmo applicationId br.com.klg.block foi mantido (versionCode 3).
+- APK debug compilado pelo GitHub pode usar uma chave diferente da versão
+  instalada. Nesse caso, o Android não permite a atualização por cima.
+- Se aparecer erro de assinatura, PARE: NÃO desinstale a versão anterior.
+  A versão 1.1 não tinha gerador de código de backup e a desinstalação
+  pode apagar recordes, moedas, XP e partida salva.
+- Este pacote não resolve sozinho uma diferença de assinatura entre APKs.
+- Para atualizações permanentes, é preciso usar uma chave de assinatura
+  estável guardada fora de repositórios públicos.
+- O teste de lógica JS passou. A compilação APK e o teste no Android real
+  dependem da execução do GitHub e do dispositivo.
