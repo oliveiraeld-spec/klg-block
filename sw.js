@@ -1,5 +1,5 @@
-const CACHE_NAME = 'klg-block-v1.4.0';
-const ASSETS = ['./', './index.html', './style.css', './app.js', './arcade.css', './arcade.js', './logo-klg.png', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const CACHE_NAME = 'klg-block-v1.5.0';
+const ASSETS = ['./', './index.html', './style.css', './app.js', './arcade.css', './arcade.js', './extras15.css', './extras15.js', './logo-klg.png', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

@@ -1,35 +1,44 @@
-KLG BLOCK 1.4 — MULTIJOGOS (ANDROID OFFLINE)
-========================================
-NOVIDADES
-1. Block Clássico (8x8): jogabilidade idêntica à versão 1.3.
-2. Queda de Blocos: desafio original inspirado em jogos de peças que caem (estilo Tetris); tabuleiro 10x18, sete formatos, girar, esquerda, direita, descer e soltar.
-3. Fusão 2048: deslize ou toque nas setas e combine números iguais em um tabuleiro 4x4.
+KLG BLOCK 1.5 — CALANGO EDITION
+================================
 
-PRESERVAÇÃO DE DADOS
-- O sistema de recorde, moedas, XP, loja, skins, missões e conquistas do Block Clássico preserva as MESMAS chaves da versão 1.3.
-- Cada modo novo possui seu próprio recorde e sua própria partida salva, com uma chave nova e cópia de segurança local.
-- O código de recuperação da versão 1.4 passa a incluir os recordes dos dois jogos novos (não as partidas ativas).
-- As recompensas dos modos novos entram na carteira global do KLG Block.
-- Missões diárias e troféus existentes continuam baseados no modo Clássico; não são alterados.
+ATUALIZAÇÃO 1.5
+- Mantidos Block Clássico, Queda de Blocos e Fusão 2048.
+- Adicionados três jogos: Memória do Calango (16 cartas), Quebra-Cabeça
+  Deslizante (3x3) e Fusão de Cores (6x6).
+- Menu com 6 jogos, logo KLG e animações de comemoração do Calango.
+- Torneio LOCAL diário para os três novos jogos: metas e resgate de
+  moedas, XP e troféus; não há jogadores online nem ranking mundial.
+- Ranking pessoal com recordes dos seis jogos.
+- Preservadas as chaves de dados da versão 1.4.
+- Código de recuperação agora também inclui os recordes dos novos jogos.
+- Funciona offline; os jogos novos ficam nos arquivos extras15.js / extras15.css.
 
-INSTALAR PELO GITHUB
-1. No repositório https://github.com/oliveiraeld-spec/klg-block, salve uma cópia da versão 1.3 e do código de recuperação de seu progresso.
-2. Extraia o ZIP e envie os ARQUIVOS E PASTAS INTERNOS ao repositório, preservando .github/workflows e app.
-3. Em Actions > Gerar APK KLG Block, confira a execução do workflow.
-4. Em Artifacts, baixe KLG_Block_1.4_APK e extraia KLG_Block_1.4.apk.
-5. Instale no Android. Se houver erro de assinatura de aplicativo, NÃO desinstale a versão antiga sem ter um backup do progresso; APKs debug do GitHub podem ter chaves diferentes.
+GERAR APK NO GITHUB
+1. Faça uma cópia da versão 1.4 e salve o código de recuperação.
+2. Abra seu repositório Github 'klg-block'.
+3. Extraia o ZIP de atualização. Envie seu conteúdo à raiz do repositório,
+   mantendo as subpastas app/ e .github/workflows/.
+4. Confirme as alterações. Vá em Ações > Gerar APK KLG Block.
+5. Após execução VERDE, abra o artefato KLG_Block_1.5_APK,
+   baixe o ZIP do artefato e extraia KLG_Block_1.5.apk.
+6. Transfira o APK para o Android para testar.
 
-REQUISITOS
-- Android 7.0+ (minSdk 24), projeto Gradle com Java 17.
-- O próprio APK contém index.html, app.js, arcade.js, style.css, arcade.css e imagens; roda sem rede.
-- Não é necessário GitHub Pages para instalar o APK.
+IMPORTANTE
+- Este ZIP é código-fonte e NÃO é um APK compilado.
+- A chave de assinatura debug do GitHub Actions pode mudar entre execuções;
+  nesse caso o Android pode recusar a atualização por cima da versão antiga.
+  NÃO desinstale sem guardar antes o código de recuperação.
+- A geração do APK e os testes físicos no Android dependem do seu GitHub.
+- O projeto usa os arquivos locais e a mesma identificação do app da 1.4.
+- versionCode=6, versionName=1.5, applicationId=br.com.klg.block.
 
-TESTES RECOMENDADOS NO APARELHO
-- Clássico: posicionamento, eliminar linhas, recorde, XP e moedas.
-- Queda de Blocos: controles de mover, girar, soltar, eliminação de linhas e recorde.
-- Fusão 2048: usar setas/deslizar, unir números, pontuação.
-- Fechar e reabrir cada modo, verificando recorde e partida.
-- Abrir Loja e confirmar que skins compradas anteriormente permanecem.
-- Gerar código de backup em Salvar/Recuperar Progresso.
+TESTES RECOMENDADOS
+* Abrir os 6 jogos.
+* Ganhar uma partida de Memória e concluir o quebra-cabeça.
+* Conseguir combinar três cores.
+* Fazer progresso no torneio, resgatar e tentar resgatar novamente.
+* Fechar totalmente e reabrir para conferir o salvamento.
+* Confirmar o recorde e as moedas/XP herdados da 1.4.
+* Testar no modo avião.
 
-AVISO: a compilação Android e a instalação no dispositivo precisam ser verificadas no seu GitHub/celular. Os testes locais cobrem a interface e regras no navegador.
+Se a execução do GitHub Actions der erro, compartilhe a captura do log.

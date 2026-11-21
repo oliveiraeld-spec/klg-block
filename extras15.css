@@ -1,0 +1,50 @@
+/* KLG 1.5 — novas modalidades com controles grandes para toque em Android. */
+.mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mode-card{min-height:120px;padding:9px 4px}
+.mode-card small{font-size:9px}
+.klg-tournament-btn{width:100%;min-height:44px;border:1px solid #e7c66b;background:linear-gradient(160deg,#483e27,#71532c);color:#ffe7a5}
+.extra-screen{width:100%;min-height:100dvh;display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px 11px 20px}
+.extra-screen.hidden{display:none!important}
+.extra-score-row{width:min(100%,450px);display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.extra-score-row>div{background:#0b2d3c;border:1px solid #517687;border-radius:12px;text-align:center;padding:9px 5px}
+.extra-score-row span{font-size:9px;color:#a9cdd8;font-weight:800;display:block}
+.extra-score-row strong{font-size:19px;color:#f8ffdc;display:block;margin-top:2px}
+.extra-board-outer{width:100%;display:flex;justify-content:center;position:relative;align-items:center}
+.extra-board{display:grid;padding:8px;gap:7px;background:linear-gradient(160deg,#133e4c,#0a2536);border:2px solid #5d9c9a;border-radius:18px;box-shadow:0 9px 25px #05141f9c;width:min(90vw,395px);aspect-ratio:1;touch-action:manipulation}
+.extra-board.memory-grid{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
+.extra-board.puzzle-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.extra-board.colors-grid{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);gap:5px}
+.extra-tile{cursor:pointer;appearance:none;min-width:0;min-height:0;border-radius:12px;border:1px solid #ffffff52;box-shadow:inset 0 3px #ffffff45,0 4px #052b36;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .1s ease,background .12s ease}
+.extra-tile:active{transform:scale(.95)}
+.memory-grid .extra-tile{font-size:clamp(25px,9vw,43px)}
+.memory-grid .card-down{background:linear-gradient(145deg,#176c77,#135065);color:#c4e5aa}
+.memory-grid .card-up{background:linear-gradient(145deg,#b2edac,#56a98c)}
+.memory-grid .matched{background:linear-gradient(145deg,#e7d780,#71bd6b);box-shadow:inset 0 3px #ffffff55}
+.puzzle-grid .extra-tile{background:linear-gradient(145deg,#61bca6,#247887);font-size:clamp(29px,11vw,49px);text-shadow:0 3px #002b3540}
+.puzzle-grid .puzzle-empty{border:1px dashed #6a9c9b;background:#062b36;box-shadow:none;cursor:default}
+.colors-grid .color-tile{background:var(--tile);border-radius:9px;box-shadow:inset 0 5px #ffffff51,inset 0 -3px #00000037,0 3px #0529368a}
+.colors-grid .color-tile.selected{outline:4px solid #fff0a4;outline-offset:-1px;transform:scale(.9);z-index:1}
+.extra-instructions{font-size:12px;line-height:1.6;max-width:395px;text-align:center;color:#d8eff0;margin:1px 0}
+.extra-status{font-size:12px;line-height:1.4;text-align:center;color:#ffe5a0;min-height:22px;max-width:390px;font-weight:800}
+.extra-actions{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+.extra-actions button{font-size:11px;padding:12px 13px;min-height:45px}
+.extra-wallet{font-size:12px;color:#ffe0a4;font-weight:800;text-align:center}
+.extra-celebration{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;inset:10% 10%;background:#072735d9;border:2px solid #c6ec74;border-radius:20px;box-shadow:0 0 35px #cdf97988}
+.extra-celebration.hidden{display:none!important}
+.extra-celebration img{width:45%;max-height:65%;object-fit:contain}
+.extra-celebration strong{font-size:clamp(15px,5vw,24px);color:#ffe18d;text-align:center;text-shadow:0 3px #0006}
+.extra-celebration.pop{animation:klgParty .5s ease-out}
+@keyframes klgParty{0%{transform:scale(.55);opacity:0}75%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}
+.tournament-card{max-height:89dvh;overflow:auto}
+.tournament-date{font-size:12px;color:#e4ddab;font-weight:900;margin:9px 0}
+.challenge-list{display:flex;flex-direction:column;gap:8px}
+.tournament-item{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:10px;background:#153743;border:1px solid #49737c;border-radius:11px;text-align:left}
+.tournament-text{flex:1;min-width:0}.tournament-text strong{display:block;color:#ffefa6;font-size:12px}.tournament-text small{display:block;color:#c0d9d6;font-size:10px;margin:3px 0;line-height:1.4}
+.tournament-claim{border-radius:8px;background:#b9f28d;color:#193c2f;border:0;padding:9px;font-size:10px;font-weight:900;min-width:90px}
+.tournament-claim:disabled{background:#2a5059;color:#a3bbbf}
+.ranking-title{margin:16px 0 8px;font-size:13px;color:#f7e59c;text-align:left}
+.ranking-list{display:flex;flex-direction:column;gap:4px}
+.ranking-entry{display:flex;justify-content:space-between;gap:7px;padding:9px;border-radius:9px;background:#12333f;text-align:left;font-size:11px;color:#dfedeb}
+.ranking-entry strong{color:#f8ec9b;white-space:nowrap}
+@media(max-width:370px){.mode-card{min-height:113px}.mode-card strong{font-size:8.5px}.extra-board{gap:5px;padding:6px}.extra-tile{border-radius:9px}.tournament-claim{min-width:78px;padding:8px 5px;font-size:9px}}
+@media(max-height:700px){.extra-screen{gap:7px;padding-top:6px}.extra-board{width:min(76vw,330px)}.extra-actions button{min-height:40px}.extra-instructions{font-size:11px}}

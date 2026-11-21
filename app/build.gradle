@@ -10,8 +10,8 @@ android {
         applicationId 'br.com.klg.block'
         minSdk 24
         targetSdk 34
-        versionCode 5
-        versionName '1.4'
+        versionCode 6
+        versionName '1.5'
     }
 
     buildTypes {
@@ -40,7 +40,7 @@ dependencies {
 // Mantém o projeto Android sincronizado com index.html, app.js e style.css.
 def prepararArquivos = tasks.register('prepararArquivosDoJogo', Sync) {
     from(rootProject.projectDir) {
-        include 'index.html', 'app.js', 'style.css', 'arcade.js', 'arcade.css', 'logo-klg.svg', 'logo-klg.png'
+        include 'index.html', 'app.js', 'style.css', 'arcade.js', 'arcade.css', 'extras15.js', 'extras15.css', 'logo-klg.svg', 'logo-klg.png'
         include 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'sw.js'
         filesMatching('app.js') {
             // O APK contém os arquivos internamente, então não precisa instalar PWA/service worker.
