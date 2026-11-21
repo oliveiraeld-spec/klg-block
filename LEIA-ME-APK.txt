@@ -1,44 +1,36 @@
-KLG BLOCK 1.5 — CALANGO EDITION
+KLG BLOCK 1.6 — CALANGO EDITION
 ================================
 
-ATUALIZAÇÃO 1.5
-- Mantidos Block Clássico, Queda de Blocos e Fusão 2048.
-- Adicionados três jogos: Memória do Calango (16 cartas), Quebra-Cabeça
-  Deslizante (3x3) e Fusão de Cores (6x6).
-- Menu com 6 jogos, logo KLG e animações de comemoração do Calango.
-- Torneio LOCAL diário para os três novos jogos: metas e resgate de
-  moedas, XP e troféus; não há jogadores online nem ranking mundial.
-- Ranking pessoal com recordes dos seis jogos.
-- Preservadas as chaves de dados da versão 1.4.
-- Código de recuperação agora também inclui os recordes dos novos jogos.
-- Funciona offline; os jogos novos ficam nos arquivos extras15.js / extras15.css.
+TRÊS NOVOS JOGOS (TOTAL: 9)
+- Sequência do Calango: reproduza padrões de quatro luzes coloridas.
+- Labirinto: leve o Calango até a estrela em caminhos aleatórios.
+- Campo de Cristais: revele casas sem atingir bombas, marque bandeiras.
+- Três dificuldades: fácil, médio e difícil em cada modalidade.
+- Campeonato 1.6 local com metas diárias, troféus e ranking dos 9 jogos.
+- Moedas e XP compartilhados, pontuações individuais e salvamento offline.
+- Mantidos intactos os arquivos extras15, arcade e chaves dos jogos 1.0–1.5.
+- Código de recuperação passa a incluir recordes e troféus dos novos jogos.
 
-GERAR APK NO GITHUB
-1. Faça uma cópia da versão 1.4 e salve o código de recuperação.
-2. Abra seu repositório Github 'klg-block'.
-3. Extraia o ZIP de atualização. Envie seu conteúdo à raiz do repositório,
-   mantendo as subpastas app/ e .github/workflows/.
-4. Confirme as alterações. Vá em Ações > Gerar APK KLG Block.
-5. Após execução VERDE, abra o artefato KLG_Block_1.5_APK,
-   baixe o ZIP do artefato e extraia KLG_Block_1.5.apk.
-6. Transfira o APK para o Android para testar.
+ATUALIZAR NO GITHUB
+1. No KLG Block 1.5, faça uma cópia do código de recuperação.
+2. Baixe o ZIP de ATUALIZAÇÃO e extraia seu conteúdo.
+3. Envie para a raiz do repositório github.com/oliveiraeld-spec/klg-block,
+   mantendo as pastas app/ e .github/workflows/ e sobrescrevendo os arquivos.
+4. Em AÇÕES > Gerar APK KLG Block, aguarde o resultado verde.
+5. Baixe o artefato KLG_Block_1.6_APK, extraia KLG_Block_1.6.apk.
+6. Instale no Android para testar sem remover o anterior.
 
 IMPORTANTE
-- Este ZIP é código-fonte e NÃO é um APK compilado.
-- A chave de assinatura debug do GitHub Actions pode mudar entre execuções;
-  nesse caso o Android pode recusar a atualização por cima da versão antiga.
-  NÃO desinstale sem guardar antes o código de recuperação.
-- A geração do APK e os testes físicos no Android dependem do seu GitHub.
-- O projeto usa os arquivos locais e a mesma identificação do app da 1.4.
-- versionCode=6, versionName=1.5, applicationId=br.com.klg.block.
+- Este pacote NÃO é APK compilado; o APK é gerado pelo GitHub Actions.
+- Se o Android recusar atualização, NÃO desinstale o 1.5 sem
+  guardar o código de recuperação, pois o debug APK pode ter outra assinatura.
+- Seus recordes e moedas estão no dispositivo, não no GitHub.
+- O torneio é LOCAL; não há partidas multiplayer ou ranking mundial.
+- Android applicationId: br.com.klg.block; versionCode: 7; versionName: 1.6.
 
-TESTES RECOMENDADOS
-* Abrir os 6 jogos.
-* Ganhar uma partida de Memória e concluir o quebra-cabeça.
-* Conseguir combinar três cores.
-* Fazer progresso no torneio, resgatar e tentar resgatar novamente.
-* Fechar totalmente e reabrir para conferir o salvamento.
-* Confirmar o recorde e as moedas/XP herdados da 1.4.
-* Testar no modo avião.
-
-Se a execução do GitHub Actions der erro, compartilhe a captura do log.
+TESTAR NO ANDROID
+- Abrir e jogar as 9 modalidades.
+- Verificar sequência, labirinto e campo com toque e três dificuldades.
+- Fechar/reabrir para conferir moedas, XP, recordes e troféus.
+- Jogar em modo avião e resgatar prêmio diário uma única vez.
+- Testar código de recuperação e verificar recordes antigos.

@@ -1,0 +1,39 @@
+/* KLG Block 1.6 - três jogos adicionais responsivos */
+.mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mode-card{min-height:114px;padding:9px 4px}
+.mode-card strong{font-size:10px;line-height:1.2;overflow-wrap:anywhere}
+.klg16-champ-btn{width:100%;min-height:44px;background:linear-gradient(135deg,#395779,#224e45);border:1px solid #aeeaa1;color:#eaffca}
+.klg16-screen{width:100%;min-height:100dvh;display:flex;align-items:center;flex-direction:column;gap:12px;padding:11px 11px 24px}
+.klg16-screen.hidden{display:none!important}
+.klg16-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,480px);gap:8px}
+.klg16-stats>div{border:1px solid #5b8a86;border-radius:12px;background:#0b2d3c;padding:9px 5px;text-align:center}
+.klg16-stats span{display:block;font-size:9px;color:#b8d6e0;font-weight:800}
+.klg16-stats strong{display:block;font-size:21px;color:#ffe6a3}
+.klg16-difficulty{display:flex;justify-content:center;gap:7px;width:min(100%,470px)}
+.klg16-difficulty button{flex:1;max-width:145px;min-height:40px;background:#153a48;color:#d6e9e7;border:1px solid #487d83;border-radius:10px;font-weight:900;font-size:10px}
+.klg16-difficulty button.selected{background:#b6ed91;color:#1d392d;border-color:#e9ffcb}
+.klg16-board-wrap{position:relative;max-width:100%;display:flex;align-items:center;justify-content:center}
+.klg16-board{width:min(92vw,410px);aspect-ratio:1;background:linear-gradient(135deg,#123a4a,#061f31);border:2px solid #57928d;border-radius:17px;padding:8px;box-shadow:0 10px 28px #041822b9;display:grid;gap:4px;touch-action:manipulation}
+.klg16-tile{border:1px solid #ffffff34;border-radius:7px;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;-webkit-tap-highlight-color:transparent;touch-action:manipulation;appearance:none;user-select:none;cursor:pointer}
+.klg16-sequence{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);padding:17px;gap:13px}
+.klg16-sequence .klg16-pad{border-radius:22px;font-size:44px;filter:brightness(.72);box-shadow:inset 0 4px #ffffff4a,inset 0 -6px #0003}
+.klg16-sequence .klg16-pad.flash{filter:brightness(1.85) saturate(1.4);transform:scale(1.035);box-shadow:0 0 27px #f4ffb6,inset 0 3px #fff9}
+.klg16-sequence .pad-0{background:#00c987}.klg16-sequence .pad-1{background:#3988f2}.klg16-sequence .pad-2{background:#ffba31}.klg16-sequence .pad-3{background:#f25e8a}
+.klg16-board.klg16-maze,.klg16-board.klg16-crystals{grid-template-columns:repeat(var(--klg16-size),minmax(0,1fr));grid-template-rows:repeat(var(--klg16-size),minmax(0,1fr));gap:2px;padding:6px}
+.klg16-maze-cell{background:#215e69;border-radius:4px;font-size:clamp(10px,3.5vw,21px)}
+.klg16-maze-cell.wall{background:linear-gradient(130deg,#124151,#0b253b);box-shadow:inset 0 2px #315a69;cursor:default}
+.klg16-maze-cell.player{background:#84be6e}.klg16-maze-cell.goal{background:#b48d47}
+.klg16-mine-cell{background:linear-gradient(130deg,#237f91,#1c5368);font-size:clamp(9px,3.2vw,18px);box-shadow:inset 0 2px #b3e4e85c}
+.klg16-mine-cell.opened{background:#17394c;color:#fff5ac;box-shadow:none}
+.klg16-hint{max-width:400px;text-align:center;font-size:12px;line-height:1.5;color:#cfe8e4}
+.klg16-notice{min-height:28px;max-width:430px;text-align:center;color:#ffe3a2;font-size:13px;font-weight:800}
+.klg16-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;max-width:480px}
+.klg16-dir{background:#24586b;border:1px solid #88b8ba;color:#fff2ca;border-radius:12px;min-width:55px;min-height:45px;font-weight:900;font-size:21px}
+.klg16-actions{display:flex;gap:7px;justify-content:center;align-items:center}
+.klg16-actions button{font-size:11px;padding:11px;min-height:43px}
+.klg16-wallet{color:#ffe1a1;font-size:12px;font-weight:800;text-align:center}
+.klg16-celebration{z-index:8;position:absolute;inset:8%;background:#0b2c3bdf;border:2px solid #e3f397;display:flex;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;border-radius:23px;box-shadow:0 0 32px #c8fd79b3}
+.klg16-celebration.hidden{display:none!important}.klg16-celebration img{width:56%;max-height:65%;object-fit:contain}.klg16-celebration strong{text-align:center;color:#fff0ae;font-size:20px;text-shadow:0 2px #072a36}
+.klg16-celebration.cheer-animate{animation:klg16Cheer .55s ease-out}@keyframes klg16Cheer{0%{opacity:0;transform:scale(.5) rotate(-10deg)}75%{opacity:1;transform:scale(1.06)}100%{transform:scale(1)}}
+.klg16-champ-modal{max-height:90dvh;overflow-y:auto}.klg16-subheading{text-align:left;font-size:12px;color:#ffe3a7;margin:14px 0 8px}
+@media(max-width:350px){.mode-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.klg16-board{width:95vw}.klg16-stats strong{font-size:18px}}
