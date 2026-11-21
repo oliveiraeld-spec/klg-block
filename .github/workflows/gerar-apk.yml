@@ -1,0 +1,45 @@
+
+name: Gerar APK KLG Block
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  criar-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Preparar Android
+        uses: android-actions/setup-android@v4
+
+      - name: Instalar SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+
+      - name: Preparar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      - name: Gerar APK
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Renomear APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk KLG_Block_1.0.apk
+
+      - name: Disponibilizar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: KLG_Block_1.0_APK
+          path: KLG_Block_1.0.apk
