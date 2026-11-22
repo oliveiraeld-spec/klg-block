@@ -1,7 +1,7 @@
 {
-  "name": "KLG Block 1.6 — Calango Edition",
+  "name": "KLG Block 1.8 — Calango Edition",
   "short_name": "KLG Block",
-  "description": "KLG Block 1.6: nove jogos offline, três dificuldades, campeonatos locais e troféus.",
+  "description": "Nove jogos offline com o Calango, Queda de Blocos retrô com fases a cada 400 pontos, recordes e campeonatos locais.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

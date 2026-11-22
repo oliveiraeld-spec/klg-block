@@ -1,4 +1,4 @@
-const CACHE_NAME = 'klg-block-v1.6.0';
+const CACHE_NAME = 'klg-block-v1.8.0';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './arcade.css', './arcade.js', './extras15.css', './extras15.js', './extras16.css', './extras16.js', './logo-klg.png', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));

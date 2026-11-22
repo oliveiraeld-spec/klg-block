@@ -3,6 +3,10 @@
   // Os jogos extras usam chaves separadas para não modificar a partida clássica.
   const KEY='klg-arcade-1.4', BACKUP='klg-arcade-1.4-backup';
   const WIDTH=10, HEIGHT=18, MERGE_SIZE=4;
+  // Fase derivada da pontuação: preserva partidas e recordes das versões anteriores.
+  const POINTS_PER_LEVEL=400, BASE_FALL_MS=800, FASTER_EACH_LEVEL_MS=70, MIN_FALL_MS=120;
+  const fallLevel=score=>Math.floor(num(score)/POINTS_PER_LEVEL)+1;
+  const fallInterval=score=>Math.max(MIN_FALL_MS,BASE_FALL_MS-(fallLevel(score)-1)*FASTER_EACH_LEVEL_MS);
   const $=id=>document.getElementById(id);
   const valid=n=>Number.isSafeInteger(n)&&n>=0&&n<=999999999;
   const num=n=>valid(n)?n:0;
@@ -69,10 +73,11 @@
     lockPiece();return false;
   }
   function hardDrop(){const f=data.fall;if(!f.started||f.paused||f.ended||!f.active)return;
+    const scoreBefore=f.score;
     let count=0;while(!collision(f.active,f.active.r+1,f.active.c)&&count<HEIGHT+4){f.active.r++;count++;}
-    f.score=Math.min(999999999,f.score+count);lockPiece();
+    f.score=Math.min(999999999,f.score+count);lockPiece(scoreBefore);
   }
-  function lockPiece(){const f=data.fall,p=f.active;if(!p)return;
+  function lockPiece(scoreBefore=data.fall.score){const f=data.fall,p=f.active;if(!p)return;
     if(p.cells.some(([r])=>p.r+r<0)){f.ended=true;f.paused=true;f.active=null;announce('Fim de jogo!',true);save();render();return;}
     for(const [r,c]of p.cells){f.board[p.r+r][p.c+c]=p.type;}
     const kept=f.board.filter(row=>row.some(x=>x===null));const removed=HEIGHT-kept.length;
@@ -82,11 +87,16 @@
       announce('🦎 Calango limpou '+removed+' linha(s)! +'+(removed*3)+' moedas');
     }
     if(f.score>f.best)f.best=f.score;
+    const newLevel=fallLevel(f.score);
+    if(newLevel>fallLevel(scoreBefore)){
+      sound();announce('🦎 FASE '+newLevel+'! Mais velocidade!');
+      lastTick=Date.now();
+    }
     spawn();save();render();updateHome();
   }
   function startTicker(){stopTicker();lastTick=Date.now();ticker=setInterval(()=>{
     if(mode!=='fall'||data.fall.paused||data.fall.ended)return;
-    const interval=Math.max(135,790-Math.floor(data.fall.lines/10)*70);
+    const interval=fallInterval(data.fall.score);
     if(Date.now()-lastTick>=interval){lastTick=Date.now();downFall();}
   },70);}
   function stopTicker(){if(ticker)clearInterval(ticker);ticker=null;}
@@ -141,12 +151,19 @@
     }board.replaceChildren(frag);
   }
   function render(){if(!mode)return;
+    $('arcadeScreen').classList.toggle('retro-fall',mode==='fall');
+    $('fallLevelPanel').classList.toggle('hidden',mode!=='fall');
     if(mode==='fall'){
-      const f=data.fall;$('arcadeTitle').textContent='QUEDA DE BLOCOS';$('arcadeSubtitle').textContent='ESTILO TETRIS • KLG';
+      const f=data.fall;$('arcadeTitle').textContent='QUEDA DE BLOCOS';$('arcadeSubtitle').textContent='LCD RETRÔ • CALANGO';
+      const level=fallLevel(f.score), interval=fallInterval(f.score);
+      $('fallLevel').textContent=String(level);
+      $('fallSpeed').textContent=(interval/1000).toFixed(2).replace('.',',')+' s';
+      $('fallNext').textContent=format(POINTS_PER_LEVEL-(f.score%POINTS_PER_LEVEL));
+      $('fallProgressFill').style.width=((f.score%POINTS_PER_LEVEL)/POINTS_PER_LEVEL*100)+'%';
       $('arcadeScore').textContent=format(f.score);$('arcadeBest').textContent=format(f.best);
       $('arcadeMetricLabel').textContent='LINHAS';$('arcadeMetric').textContent=format(f.lines);
       $('fallControls').classList.remove('hidden');$('mergeControls').classList.add('hidden');
-      $('arcadeTip').textContent='Toque nos botões para mover, girar e soltar. Também funciona com teclado.';
+      $('arcadeTip').textContent='Cursor amarelo: ◀ ▶ ▼ · botão grande: girar · ⤓: soltar. Nova fase a cada 400 pontos.';
       $('arcadePause').classList.remove('hidden');$('arcadePause').textContent=f.paused?'▶':'Ⅱ';
       showFallBoard();
       if(f.paused&&!f.ended)announce('PAUSADO · Toque em ▶ para continuar.',true);
@@ -191,7 +208,7 @@
     $('arcadeRestart').addEventListener('click',()=>{if(confirm('Reiniciar esta partida?'))restart();});
     $('arcadePause').addEventListener('click',togglePause);
     $('fallLeft').addEventListener('click',()=>moveFall(-1));$('fallRight').addEventListener('click',()=>moveFall(1));
-    $('fallRotate').addEventListener('click',rotateFall);$('fallDown').addEventListener('click',()=>{downFall();lastTick=Date.now();});$('fallDrop').addEventListener('click',()=>{hardDrop();lastTick=Date.now();});
+    $('fallRotate').addEventListener('click',rotateFall);$('fallUp').addEventListener('click',rotateFall);$('fallDown').addEventListener('click',()=>{downFall();lastTick=Date.now();});$('fallDrop').addEventListener('click',()=>{hardDrop();lastTick=Date.now();});
     for(const dir of ['Up','Down','Left','Right'])$('merge'+dir).addEventListener('click',()=>moveMerge(dir.toLowerCase()));
     document.addEventListener('keydown',e=>{
       if(!mode||$('arcadeScreen').classList.contains('hidden'))return;
