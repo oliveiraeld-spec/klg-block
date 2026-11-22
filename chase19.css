@@ -1,0 +1,34 @@
+/* 1.9 — Caça-Pontos do Calango: labirinto próprio com controles de toque */
+.chase-screen{display:flex;flex-direction:column;align-items:center;gap:11px;width:100%;padding:10px 11px max(18px,env(safe-area-inset-bottom));min-height:100dvh}
+.chase-screen.hidden{display:none!important}
+.chase-screen .arcade-header{width:100%}
+.chase-stats{width:min(100%,450px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.chase-stats>div{border:1px solid #43797e;border-radius:12px;background:#0d3141;text-align:center;padding:9px 5px}
+.chase-stats span{display:block;font-size:9px;letter-spacing:.5px;font-weight:900;color:#bcdfda}
+.chase-stats strong{font-size:21px;color:#ffdda3;font-variant-numeric:tabular-nums}
+.chase-screen .klg16-difficulty{margin-bottom:0}
+.chase-maze-frame{width:min(93vw,410px);max-width:100%;aspect-ratio:1;position:relative;border:4px solid #426b74;border-radius:15px;overflow:hidden;background:#081c2a;box-shadow:0 6px 16px #000a,inset 0 0 14px #75ffb412;padding:5px}
+.chase-board{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));grid-template-rows:repeat(13,minmax(0,1fr));gap:1px;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none}
+.chase-cell{position:relative;min-width:0;min-height:0;display:flex;justify-content:center;align-items:center;font-size:clamp(10px,3vw,19px);text-align:center;color:#ffe7a0}
+.chase-cell.wall{background:#236186;border:1px solid #3d91b7;border-radius:2px;box-shadow:inset 1px 1px #91d7e52b,inset -1px -1px #041b31}
+.chase-cell.path{background:#091a2b}
+.chase-cell.dot:not(.hero):not(.bug)::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:22%;width:22%;border-radius:50%;background:#ffdda0;box-shadow:0 0 5px #ffe87e}
+.chase-cell.hero{filter:drop-shadow(0 0 3px #7aff95);z-index:3}
+.chase-cell.hero.invulnerable{background:#53924b8c;border-radius:50%}
+.chase-cell.bug{z-index:2}.chase-cell.bug.vulnerable{background:#7573ef88;border-radius:50%}
+.chase-cheer{position:absolute;z-index:5;inset:20%;display:flex;justify-content:center;align-items:center;flex-direction:column;background:#071a2be8;border:2px solid #fbe5a3;border-radius:15px;pointer-events:none;animation:klg19chase .36s ease-out}
+.chase-cheer.hidden{display:none!important}.chase-cheer img{width:75%;max-height:70%;object-fit:contain}.chase-cheer strong{font-size:20px;font-weight:1000;color:#f9f1b4;text-align:center}
+@keyframes klg19chase{0%{opacity:0;transform:scale(.75)}100%{opacity:1;transform:scale(1)}}
+.chase-notice{font-size:12px;font-weight:900;text-align:center;color:#f9e6a8;min-height:31px;max-width:410px;line-height:1.4;margin:0}
+.chase-pad{display:grid;grid-template-columns:repeat(3,74px);grid-template-rows:repeat(3,45px);gap:5px;place-items:center;align-items:center;justify-content:center}
+.chase-pad button{touch-action:none;user-select:none;-webkit-user-select:none;min-width:0;min-height:0;white-space:nowrap}
+.chase-key{width:64px;height:44px;border-radius:15px;background:linear-gradient(#bffb9c,#69cb7f);border:2px solid #d5ffaa;color:#173c36;font-size:23px;font-weight:1000;box-shadow:0 3px 0 #2a6547,0 6px 9px #0007}
+.chase-key:active{transform:translateY(3px);box-shadow:0 1px 0 #2a6547}
+#chaseUp{grid-area:1/2}#chaseLeft{grid-area:2/1}#chaseRight{grid-area:2/3}#chaseDown{grid-area:3/2}
+.chase-pause{grid-area:2/2;background:#ffdf6e;color:#443b23;border:1px solid #fff0ae;border-radius:13px;font-size:10px;font-weight:1000;padding:6px 7px;width:80px;min-height:40px}
+.chase-pause:disabled{opacity:.5}
+.chase-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.chase-actions button{padding:10px 11px;font-size:10px;min-height:41px}
+.chase-help{max-width:440px;color:#bddee0;font-size:11px;text-align:center;line-height:1.4;margin:0}
+@media(max-height:740px){.chase-screen{gap:6px;padding-top:7px}.chase-maze-frame{width:min(75vw,calc(100dvh - 330px),370px)}.chase-pad{grid-template-rows:repeat(3,36px);grid-template-columns:repeat(3,65px);gap:3px}.chase-key{width:57px;height:34px;font-size:17px}.chase-stats>div{padding:5px 4px}.chase-stats strong{font-size:18px}.chase-screen .arcade-brand img{height:35px;width:35px}}
+@media(max-width:350px){.chase-maze-frame{width:94vw}.chase-cell{font-size:10px}.chase-pad{grid-template-columns:repeat(3,65px)}}

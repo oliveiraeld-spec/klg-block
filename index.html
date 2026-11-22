@@ -5,25 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <meta name="theme-color" content="#0b1d2b" />
   <meta name="description" content="KLG Block: encaixe blocos, faça combos e suba de nível com o Calango!" />
-  <title>KLG Block 1.8 — Calango</title>
+  <title>KLG Block 1.9 — Calango</title>
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="arcade.css" />
   <link rel="stylesheet" href="extras15.css" />
   <link rel="stylesheet" href="extras16.css" />
+  <link rel="stylesheet" href="chase19.css" />
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
   <div class="ambient ambient-b" aria-hidden="true"></div>
   <main class="app" id="app">
     <section class="screen home-screen" id="homeScreen" aria-label="Tela inicial">
-      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.8</span></div>
+      <div class="home-top"><span class="mini-pill"><span class="online-dot"></span> JOGO OFFLINE</span><span class="version">VERSÃO 1.9</span></div>
       <div class="hero">
         <div class="hero-halo"><img src="logo-klg.png" alt="Calango mascote KLG" class="hero-logo" /></div>
-        <div class="brand-kicker">O DESAFIO DO CALANGO</div><div class="hero-new">🦎 NOVE JOGOS • CAMPEONATOS • PRÊMIOS</div>
+        <div class="brand-kicker">O DESAFIO DO CALANGO</div><div class="hero-new">🦎 DEZ JOGOS • CAMPEONATOS • PRÊMIOS</div>
         <h1><span>KLG</span> BLOCK</h1>
-        <p>Nove jogos KLG, incluindo Cobrinha e Estoura-Bolhas, com recordes salvos!</p>
+        <p>Dez jogos KLG: Queda de Blocos retrô, Cobrinha, Bolhas e o novo Caça-Pontos!</p>
       </div>
       <div class="home-stats">
         <div><span class="stat-icon">🏆</span><span class="stat-name">RECORDE BLOCK</span><strong id="homeBest">0</strong></div>
@@ -42,6 +43,7 @@
           <button id="sequenceModeBtn" class="mode-card" type="button"><span class="mode-emoji">🦎</span><strong>SEQUÊNCIA DO CALANGO</strong><small>Repita as cores iluminadas</small><em id="sequenceHomeBest">Recorde: 0</em></button>
           <button id="snakeModeBtn" class="mode-card" type="button"><span class="mode-emoji">🐍</span><strong>COBRINHA DO CALANGO</strong><small>Pegue frutas sem encostar</small><em id="snakeHomeBest">Recorde: 0</em></button>
           <button id="bubblesModeBtn" class="mode-card" type="button"><span class="mode-emoji">🫧</span><strong>ESTOURA-BOLHAS</strong><small>Toque em grupos iguais</small><em id="bubblesHomeBest">Recorde: 0</em></button>
+          <button id="chaseModeBtn" class="mode-card" type="button"><span class="mode-emoji">🦎</span><strong>CAÇA-PONTOS DO CALANGO</strong><small>Recolha frutas e fuja das joaninhas</small><em id="chaseHomeBest">Recorde: 0</em></button>
         </div>
       </div>
       <div class="home-actions">
@@ -50,7 +52,7 @@
         <button id="missionBtn" class="secondary-btn mission-primary" type="button">🎯 MISSÕES DIÁRIAS</button>
         <div class="home-shortcuts"><button id="shopBtn" class="secondary-btn shortcut-btn" type="button">🛍 LOJA KLG</button><button id="statsBtn" class="secondary-btn shortcut-btn" type="button">🏆 CONQUISTAS</button></div>
         <button id="tournamentBtn" class="secondary-btn klg-tournament-btn" type="button">🏆 TORNEIO DIÁRIO & RANKING</button>
-        <button id="klg16ChampBtn" class="secondary-btn klg16-champ-btn" type="button">🏆 CAMPEONATO • NOVE RECORDES</button>
+        <button id="klg16ChampBtn" class="secondary-btn klg16-champ-btn" type="button">🏆 CAMPEONATO • DEZ RECORDES</button>
         <button id="howBtn" class="plain-btn" type="button">? COMO JOGAR</button>
         <button id="backupBtn" class="plain-btn backup-access" type="button">🔐 SALVAR / RECUPERAR PROGRESSO</button>
       </div>
@@ -102,7 +104,7 @@
         <div class="fall-progress-track" aria-hidden="true"><div id="fallProgressFill"></div></div>
       </div>
       <div class="arcade-board-holder"><div id="arcadeBoard" class="arcade-board" role="grid" aria-label="Tabuleiro do jogo"></div>
-        <div id="arcadeNotice" class="arcade-notice hidden" aria-live="polite"></div>
+        <div id="arcadeNotice" class="arcade-notice hidden" aria-live="polite"></div><div id="fallLevelToast" class="fall-level-toast hidden" aria-live="assertive" role="status">NÍVEL 2!</div>
       </div>
       <div id="fallControls" class="arcade-controls retro-controls hidden" aria-label="Controles do Queda de Blocos">
         <div class="retro-dpad">
@@ -127,7 +129,7 @@
       <div class="arcade-actions"><button id="arcadeRestart" class="footer-action" type="button">↻ NOVA PARTIDA</button><button id="arcadeHome" class="footer-action" type="button">⌂ OUTROS JOGOS</button></div>
     </section>
 
-    <section id="extraScreen" class="screen extra-screen hidden" aria-label="Jogos do Calango 1.8">
+    <section id="extraScreen" class="screen extra-screen hidden" aria-label="Jogos do Calango 1.9">
       <header class="arcade-header">
         <button id="extraBack" type="button" class="icon-btn" aria-label="Voltar aos jogos">‹</button>
         <div class="arcade-brand"><img src="logo-klg.png" alt="Calango KLG"/><div><strong id="extraTitle">KLG DESAFIO</strong><small>CALANGO EDITION</small></div></div>
@@ -148,15 +150,27 @@
       <div class="extra-wallet">🪙 <span id="extraCoins">0</span> moedas · ⚡ Nível <span id="extraLevel">1</span></div>
     </section>
 
-    <section id="klg16Screen" class="screen klg16-screen hidden" aria-label="Jogos do Calango 1.8">
+    <section id="klg16Screen" class="screen klg16-screen hidden" aria-label="Jogos do Calango 1.9">
       <header class="arcade-header"><button id="klg16Back" class="icon-btn" type="button" aria-label="Voltar aos jogos">‹</button>
-      <div class="arcade-brand"><img src="logo-klg.png" alt="Calango KLG"/><div><strong id="klg16Title">KLG DESAFIO</strong><small>CALANGO EDITION • 1.8</small></div></div><span class="mini-pill">OFFLINE</span></header>
+      <div class="arcade-brand"><img src="logo-klg.png" alt="Calango KLG"/><div><strong id="klg16Title">KLG DESAFIO</strong><small>CALANGO EDITION • 1.9</small></div></div><span class="mini-pill">OFFLINE</span></header>
       <div class="klg16-stats"><div><span>PONTOS</span><strong id="klg16Score">0</strong></div><div><span>🏆 RECORDE</span><strong id="klg16Best">0</strong></div><div><span id="klg16MetricLabel">RODADA</span><strong id="klg16Metric">0</strong></div></div>
       <div class="klg16-difficulty" aria-label="Nível de dificuldade"><button id="klg16Diff_easy" type="button">FÁCIL</button><button id="klg16Diff_medium" type="button">MÉDIO</button><button id="klg16Diff_hard" type="button">DIFÍCIL</button></div>
       <div class="klg16-board-wrap"><div id="klg16Board" class="klg16-board" aria-label="Tabuleiro do desafio"></div><div id="klg16Celebration" class="klg16-celebration hidden" aria-live="polite"><img src="logo-klg.png" alt=""/><strong id="klg16Cheers">PARABÉNS!</strong></div></div>
       <p id="klg16Hint" class="klg16-hint"></p><div id="klg16Notice" class="klg16-notice" aria-live="polite"></div><div id="klg16Controls" class="klg16-controls"></div>
       <div class="klg16-actions"><button id="klg16New" class="secondary-btn" type="button">↻ NOVA PARTIDA</button><button id="klg16Exit" class="secondary-btn" type="button">⌂ OUTROS JOGOS</button></div>
       <div class="klg16-wallet">🎯 <span id="klg16Difficulty">FÁCIL</span> · 🪙 <span id="klg16Coins">0</span> moedas · ⚡ Nível <span id="klg16Level">1</span></div>
+    </section>
+    <section id="chaseScreen" class="screen chase-screen hidden" aria-label="Caça-Pontos do Calango">
+      <header class="arcade-header"><button id="chaseBack" class="icon-btn" type="button" aria-label="Voltar aos jogos">‹</button>
+        <div class="arcade-brand"><img src="logo-klg.png" alt="Calango KLG"/><div><strong>CAÇA-PONTOS</strong><small>AVENTURA DO CALANGO • 1.9</small></div></div><span class="mini-pill">OFFLINE</span></header>
+      <div class="chase-stats"><div><span>🎯 PONTOS</span><strong id="chaseScore">0</strong></div><div><span>🏆 RECORDE</span><strong id="chaseBest">0</strong></div><div><span>❤️ VIDAS</span><strong id="chaseLives">3</strong></div></div>
+      <div class="klg16-difficulty" aria-label="Dificuldade"><button id="chaseDiff_easy" type="button">FÁCIL</button><button id="chaseDiff_medium" type="button">MÉDIO</button><button id="chaseDiff_hard" type="button">DIFÍCIL</button></div>
+      <div class="chase-maze-frame"><div id="chaseBoard" class="chase-board" role="grid" aria-label="Labirinto com frutas e joaninhas inimigas"></div>
+        <div id="chaseCheer" class="chase-cheer hidden" aria-live="polite"><img src="logo-klg.png" alt=""/><strong id="chaseCheerText">NOVA FASE!</strong></div></div>
+      <p id="chaseNotice" class="chase-notice" aria-live="polite">Escolha uma direção e recolha os pontos.</p>
+      <div class="chase-pad" aria-label="Controle direcional do Calango"><button id="chaseUp" class="chase-key" type="button" aria-label="Subir">▲</button><button id="chaseLeft" class="chase-key" type="button" aria-label="Esquerda">◀</button><button id="chasePause" class="chase-pause" type="button">▶ COMEÇAR</button><button id="chaseRight" class="chase-key" type="button" aria-label="Direita">▶</button><button id="chaseDown" class="chase-key" type="button" aria-label="Descer">▼</button></div>
+      <div class="chase-actions"><button id="chaseNew" class="secondary-btn" type="button">↻ NOVA PARTIDA</button><button id="chaseExit" class="secondary-btn" type="button">⌂ OUTROS JOGOS</button></div>
+      <p class="chase-help">🦎 Recolha os pontos amarelos e as frutas 🍓, evite as joaninhas 🐞. Pegue ⭐ para ficar protegido por alguns segundos. Deslize na tela ou use as setas.</p>
     </section>
   </main>
 
@@ -184,7 +198,7 @@
   </div>
   <div class="modal-backdrop hidden" id="backupModal" role="dialog" aria-modal="true" aria-labelledby="backupTitle">
     <div class="modal-card backup-card"><div class="modal-icon">🔐</div><h2 id="backupTitle">Proteja seu progresso</h2>
-      <p>Copie e guarde este código para recuperar <b>recordes, moedas, XP, skins, conquistas e melhores pontuações dos nove jogos</b> caso precise reinstalar o jogo.</p>
+      <p>Copie e guarde este código para recuperar <b>recordes, moedas, XP, skins, conquistas e melhores pontuações dos dez jogos</b> caso precise reinstalar o jogo.</p>
       <label for="backupCode">SEU CÓDIGO DE RECUPERAÇÃO</label>
       <textarea id="backupCode" rows="3" readonly spellcheck="false" aria-label="Código para guardar"></textarea>
       <button id="copyBackupBtn" type="button" class="secondary-btn modal-close">📋 COPIAR CÓDIGO</button>
@@ -232,15 +246,16 @@
   </div>
 
   <div class="modal-backdrop hidden" id="klg16ChampModal" role="dialog" aria-modal="true" aria-labelledby="klg16ChampTitle"><div class="modal-card collection-card klg16-champ-modal">
-    <div class="modal-icon">🏆</div><h2 id="klg16ChampTitle">Campeonato do Calango 1.8</h2>
+    <div class="modal-icon">🏆</div><h2 id="klg16ChampTitle">Campeonato do Calango 1.9</h2>
     <p class="collection-note">Campeonato local: desafios diários, três dificuldades, troféus e recordes. Sem internet, sem ranking de outras pessoas.</p>
     <div id="klg16ChampDay" class="tournament-date"></div><h3 class="klg16-subheading">🎯 Missões de hoje</h3><div id="klg16Challenges" class="challenge-list"></div>
     <h3 class="klg16-subheading">🥇 Troféus especiais</h3><div id="klg16Achievements" class="challenge-list"></div>
-    <h3 class="klg16-subheading">📊 Ranking pessoal dos 9 jogos</h3><div id="klg16Rankings" class="ranking-list"></div>
+    <h3 class="klg16-subheading">📊 Ranking pessoal dos 10 jogos</h3><div id="klg16Rankings" class="ranking-list"></div>
     <button id="klg16ChampClose" type="button" class="secondary-btn modal-close">VOLTAR AOS JOGOS</button></div></div>
   <script src="app.js" defer></script>
   <script src="arcade.js" defer></script>
   <script src="extras15.js" defer></script>
   <script src="extras16.js" defer></script>
+  <script src="chase19.js" defer></script>
 </body>
 </html>

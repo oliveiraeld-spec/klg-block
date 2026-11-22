@@ -1,31 +1,28 @@
-KLG BLOCK 1.8 — QUEDA DE BLOCOS RETRÔ
-====================================
+KLG BLOCK 1.9 — AVISO DE NÍVEL, CONTROLES CORRIGIDOS E CAÇA-PONTOS
+==================================================================
 
-NOVIDADES
-- Modificado APENAS o modo Queda de Blocos: aparência retrô LCD inspirada em videogames portáteis, blocos escuros no visor verde-claro, controles amarelos redondos (cima, esquerda, direita, descer, girar e soltar).
-- NÍVEIS por pontuação: nível = 1 + parte inteira de (pontos / 400).
-- Velocidade de queda: começa em 800 ms por casa, diminui 70 ms por nível, até o limite de 120 ms.
-- Barra de progresso, pontos até próxima fase e velocidade atual na tela.
-- Aviso sonoro e mensagem ao alcançar uma nova fase.
-- Recorde atualizado após cada peça travada (incluindo soltar) e gravado no armazenamento local, como na 1.7.
-- Os outros oito jogos, as missões, a loja, os torneios e as chaves de salvamento permanecem INALTERADOS.
-- Mudança de fase NÃO apaga a partida e continua funcionando offline.
+O QUE MUDOU
+1. Queda de Blocos: sempre que a pontuação ultrapassar um múltiplo de 400, exibe mensagem grande e temporária “NÍVEL X!”, sem interromper a partida. A velocidade e o visual LCD 1.8 continuam iguais.
+2. Cobrinha do Calango: partida começa PAUSADA; pressione ▶ COMEÇAR. Os controles não são recriados em cada movimento e as setas respondem ao toque/arraste.
+3. Estoura-Bolhas: toque em dois ou mais blocos adjacentes da mesma cor; novas bolhas surgem após a explosão, mantendo o jogo em andamento. Os pontos/recorde são salvos a cada grupo.
+4. NOVO JOGO: Caça-Pontos do Calango (10º modo), jogo ORIGINAL de perseguição num labirinto. Recolha pontos e morangos, desvie das joaninhas, colete estrelas para proteção. Dificuldades fácil, médio e difícil. 3 vidas; controles direcionais e gestos. Recorde separado e inclusão no backup do progresso.
+5. Os outros jogos, o Calango, moedas, XP, recordes e modo offline são preservados. Arquivos antigos de salvamento não foram renomeados nem apagados.
 
-INSTALAÇÃO PELO GITHUB
-1) Na versão 1.7, copie seu código de backup de progresso e guarde fora do app.
-2) Entre em github.com/oliveiraeld-spec/klg-block e envie o CONTEÚDO do ZIP de ATUALIZAÇÃO para a raiz.
-3) Preserve a estrutura app/ e .github/workflows/; substitua os arquivos existentes.
-4) Em AÇÕES > Gerar APK KLG Block, abra a execução concluída com marca verde.
-5) Em Artifacts, baixe KLG_Block_1.8_APK e extraia KLG_Block_1.8.apk.
-6) Tente instalar por cima da versão 1.7. Se houver conflito de assinatura, NÃO desinstale a 1.7 sem um backup externo.
+PARA GERAR O APK
+1. Guarde seu código de recuperação da versão 1.8 em local seguro.
+2. Extraia o pacote KLG_Block_1.9_ATUALIZACAO_PARA_GITHUB_APK.zip.
+3. Abra github.com/oliveiraeld-spec/klg-block e escolha Adicionar arquivo > Carregar arquivos.
+4. Envie o CONTEÚDO da pasta extraída para a raiz do repositório, preservando a estrutura das pastas app/ e .github/workflows/.
+5. Confirme as alterações e abra Ações > Gerar APK KLG Block.
+6. Após resultado verde, baixe KLG_Block_1.9_APK em Artifacts, EXTRAIA e instale o .apk.
+7. Se houver erro de assinatura, NÃO desinstale a versão anterior sem antes salvar seu código de recuperação.
 
-TESTES NO ANDROID
-- Abra Queda de Blocos. Confira os botões amarelos e a tela LCD.
-- Pressione cima, esquerda, direita, descer, girar e soltar.
-- Observe: 0-399 pontos = fase 1, 400-799 = 2, 800-1199 = 3.
-- Faça 400 pontos; a velocidade exibida deve mudar de 0,80 s para 0,73 s.
-- Feche o app e abra novamente: recorde e pontuação da partida devem persistir.
-- Teste os outros oito jogos, moedas, XP, progressos e modo avião.
+TESTES RECOMENDADOS NO ANDROID
+- Queda de Blocos: ao alcançar 400 pontos aparece “NÍVEL 2!” por ~2 segundos e o jogo continua mais rápido.
+- Cobrinha: toque em COMEÇAR, use as setas para pegar frutas, pause e retome; feche e abra para conferir recorde.
+- Estoura-Bolhas: toque em dois blocos iguais juntos; confira pontuação e recorde após reabrir.
+- Caça-Pontos: use as setas, recolha pontos, desvie das joaninhas, teste uma estrela, pause e retome, confira recorde salvo.
+- Teste os 10 jogos, moedas, XP e modo avião.
 
-NOTA: Este ZIP NÃO é APK compilado; o GitHub Actions produz o APK.
-O pacote mantém applicationId br.com.klg.block, versão 1.8, versionCode 9.
+NOTA: o ZIP não contém APK compilado. O GitHub Actions gera o APK de TESTE.
+applicationId: br.com.klg.block; versionName: 1.9; versionCode: 10.

@@ -1,4 +1,4 @@
-/* KLG Block 1.6 - três jogos adicionais responsivos */
+/* KLG Block 1.7 - três jogos adicionais responsivos */
 .mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .mode-card{min-height:114px;padding:9px 4px}
 .mode-card strong{font-size:10px;line-height:1.2;overflow-wrap:anywhere}
@@ -37,3 +37,18 @@
 .klg16-celebration.cheer-animate{animation:klg16Cheer .55s ease-out}@keyframes klg16Cheer{0%{opacity:0;transform:scale(.5) rotate(-10deg)}75%{opacity:1;transform:scale(1.06)}100%{transform:scale(1)}}
 .klg16-champ-modal{max-height:90dvh;overflow-y:auto}.klg16-subheading{text-align:left;font-size:12px;color:#ffe3a7;margin:14px 0 8px}
 @media(max-width:350px){.mode-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.klg16-board{width:95vw}.klg16-stats strong{font-size:18px}}
+
+/* Modos 1.7: controles grandes, bolhas e cobrinha em telas Android */
+.klg16-board.klg16-snake,.klg16-board.klg16-bubbles{grid-template-columns:repeat(var(--klg16-size),minmax(0,1fr));grid-template-rows:repeat(var(--klg16-size),minmax(0,1fr));gap:3px;padding:7px}
+.klg17-snake-cell{background:#1a5361;border-radius:5px;border:1px solid #4d7987;box-shadow:inset 0 2px #ffffff1b;font-size:clamp(10px,3vw,19px)}
+.klg17-snake-cell.tail{background:linear-gradient(160deg,#79db64,#39864f);box-shadow:inset 0 2px #e1ffac88}
+.klg17-snake-cell.head{background:#c5f080;border:2px solid #fff1b4;box-shadow:0 0 12px #72ea9488}
+.klg17-snake-cell.fruit{background:#355a80;box-shadow:0 0 10px #ff765f88}
+.klg17-bubble{background:var(--bubble-color);border-radius:50%;border:2px solid #ffffff7c;box-shadow:inset -4px -6px #0000002d,inset 4px 5px #ffffff60,0 3px 5px #00172165;color:#ffffffba;font-size:clamp(12px,4vw,27px);text-shadow:0 1px 2px #0002}
+.klg17-bubble.empty{background:transparent;border-color:transparent;box-shadow:none;opacity:0}
+.klg17-toggle{min-height:44px;padding:10px 14px;background:#b9f28d;color:#153a31;border:0;border-radius:10px;font-weight:900}
+.klg17-tip{font-weight:800;color:#fce5aa;font-size:11px}
+@media(max-width:370px){.klg16-board.klg16-snake,.klg16-board.klg16-bubbles{gap:2px;padding:5px}.klg16-controls .klg16-dir{min-width:44px}}
+
+/* 1.9 – controles persistentes da Cobrinha e resposta de toque */
+.klg16-board.klg16-snake{touch-action:none}.klg16-controls .klg16-dir{touch-action:none;user-select:none;-webkit-user-select:none}.klg17-toggle{min-width:120px}.klg16-board.klg16-bubbles .klg17-bubble:active{transform:scale(.91);filter:brightness(1.2)}

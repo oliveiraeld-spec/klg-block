@@ -233,7 +233,7 @@
     el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();renderStats();renderMissions();beep('win');
     el('missionMessage').textContent='Prêmio recebido! +'+mission.coins+' moedas e +'+mission.xp+' XP.';
   }
-  function backupCode(){return 'KLG-'+btoa(JSON.stringify({v:2,b:state.best,c:state.coins,x:state.xp,e:extras,a:window.KLGArcade?.exportBackup?.()||null,m:window.KLGExtras15?.exportBackup?.()||null,n:window.KLGExtras16?.exportBackup?.()||null}));}
+  function backupCode(){return 'KLG-'+btoa(JSON.stringify({v:2,b:state.best,c:state.coins,x:state.xp,e:extras,a:window.KLGArcade?.exportBackup?.()||null,m:window.KLGExtras15?.exportBackup?.()||null,n:window.KLGExtras16?.exportBackup?.()||null,p:window.KLGChase19?.exportBackup?.()||null}));}
   function showBackup(){el('backupCode').value=backupCode();el('restoreCode').value='';el('backupMessage').textContent='Guarde o código antes de reinstalar o aplicativo.';show('backupModal');}
   async function copyBackup(){
     const field=el('backupCode');field.focus();field.select();
@@ -262,6 +262,7 @@
       if(data.a && window.KLGArcade?.importBackup)window.KLGArcade.importBackup(data.a);
       if(data.m && window.KLGExtras15?.importBackup)window.KLGExtras15.importBackup(data.m);
       if(data.n && window.KLGExtras16?.importBackup)window.KLGExtras16.importBackup(data.n);
+      if(data.p && window.KLGChase19?.importBackup)window.KLGChase19.importBackup(data.p);
       save();el('backupCode').value=backupCode();el('backupMessage').textContent='Conquistas recuperadas! Confira recorde, moedas e nível na tela inicial.';
       el('homeBest').textContent=format(state.best);el('homeCoins').textContent=format(state.coins);el('homeLevel').textContent=level();renderStats();renderShop();renderLifetime();
     }catch(e){el('backupMessage').textContent='Código inválido. Confira se foi copiado por inteiro.';}

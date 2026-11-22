@@ -53,6 +53,8 @@
   function award(coins,xp){window.KLGBridge?.award?.(coins,xp);}
   function announce(message,persistent=false){const n=$('arcadeNotice');clearTimeout(noticeTimer);n.textContent=message;n.classList.remove('hidden');if(!persistent)noticeTimer=setTimeout(clearNotice,1500);}
   function clearNotice(){clearTimeout(noticeTimer);const n=$('arcadeNotice');n.classList.add('hidden');n.textContent='';}
+  let levelToastTimer=null;
+  function showLevelToast(level){const el=$('fallLevelToast');if(!el)return;clearTimeout(levelToastTimer);el.textContent='🎉 NÍVEL '+level+'!';el.classList.remove('hidden','level-pop');void el.offsetWidth;el.classList.add('level-pop');levelToastTimer=setTimeout(()=>el.classList.add('hidden'),1850);}
   function updateHome(){if($('fallHomeBest'))$('fallHomeBest').textContent='Recorde: '+format(data.fall.best);if($('mergeHomeBest'))$('mergeHomeBest').textContent='Recorde: '+format(data.merge.best);}
   function randomPiece(){const type=Math.floor(Math.random()*7);return {type,r:-1,c:Math.floor((WIDTH-3)/2),cells:SHAPES[type].map(p=>[...p])};}
   function collision(piece,r=piece.r,c=piece.c,cells=piece.cells){return cells.some(([y,x])=>{const yy=r+y,xx=c+x;return xx<0||xx>=WIDTH||yy>=HEIGHT||(yy>=0&&data.fall.board[yy][xx]!==null);});}
@@ -89,7 +91,7 @@
     if(f.score>f.best)f.best=f.score;
     const newLevel=fallLevel(f.score);
     if(newLevel>fallLevel(scoreBefore)){
-      sound();announce('🦎 FASE '+newLevel+'! Mais velocidade!');
+      sound();announce('🦎 Você subiu para o nível '+newLevel+'!');showLevelToast(newLevel);
       lastTick=Date.now();
     }
     spawn();save();render();updateHome();
@@ -187,7 +189,7 @@
     }else{stopTicker();if(!data.merge.started||data.merge.ended)beginMerge();}
     render();
   }
-  function goHome(){if(mode==='fall'&&data.fall.started&&!data.fall.ended)data.fall.paused=true;
+  function goHome(){if($('fallLevelToast'))$('fallLevelToast').classList.add('hidden');if(mode==='fall'&&data.fall.started&&!data.fall.ended)data.fall.paused=true;
     stopTicker();save();mode=null;$('arcadeScreen').classList.add('hidden');clearNotice();updateHome();window.KLGBridge?.toHome?.();
   }
   function restart(){if(!mode)return;
